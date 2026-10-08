@@ -1,8 +1,8 @@
-import { displayMenu, respondToInput, getAnswer } from "../helpers/menu.js";
-
 // displays the main menu prompt
 export function displayMenu() {
   console.log(`
+    Welcome to the Task Manager
+    
     What would you like to do?
     
     1. Add a task
@@ -18,10 +18,3 @@ export function displayMenu() {
     
     `);
 }
-
-export async function mainMenu() {
-  console.log(`Welcome to Task Manager`);
-  displayMenu();
-}
-
-mainMenu();

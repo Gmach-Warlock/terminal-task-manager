@@ -1,6 +1,9 @@
-import taskFactory from "../helpers/taskFactory.js";
+import createTask from "./taskFactories.js";
+import { isValidIndex } from "../helpers/clean.js";
 
-export class TaskManager {
+export class TaskManagerSingleton {
+  static #instance = null;
+
   tasks;
   size;
   totalCreated;
@@ -9,9 +12,15 @@ export class TaskManager {
     this.size = 0;
     this.totalCreated = 0;
   }
+  static getInstance() {
+    if (this.#instance === null) {
+      this.#instance = new TaskManager();
+    }
+    return this.#instance;
+  }
   addTask(title, description, priority) {
     const id = this.totalCreated + 1;
-    this.tasks.push(taskFactory(id, title, description, priority));
+    this.tasks.push(createTask(id, title, description, priority));
     this.totalCreated++;
     this.size++;
   }
@@ -19,25 +28,19 @@ export class TaskManager {
     console.log(this.tasks);
   }
   markTaskComplete(id) {
-    const index = this.tasks.findIndex((item) => item.id === id);
-    if (index === -1) console.log("index not found!");
+    if (!isValidIndex(this.tasks, id)) return;
     this.tasks[index].completed = true;
-    console.log(this.tasks[index]);
   }
   markTaskIncomplete(id) {
-    const index = this.tasks.findIndex((item) => item.id === id);
-    if (index === -1) console.log("index not found!");
+    if (!isValidIndex(this.tasks, id)) return;
     this.tasks[index].completed = false;
-    console.log(this.tasks[index]);
   }
   deleteTask(id) {
-    const index = this.tasks.findIndex((item) => item.id === id);
-    if (index === -1) console.log("index not found!");
+    if (!isValidIndex(this.tasks, id)) return;
     this.tasks.splice(index, 1);
   }
   editTask(id, newTitle, newDescription) {
-    const index = this.tasks.findIndex((item) => item.id === id);
-    if (index === -1) console.log("index not found!");
+    if (!isValidIndex(this.tasks, id)) return;
     this.tasks[index].title = newTitle;
     this.tasks[index].description = newDescription;
   }
@@ -51,11 +54,8 @@ export class TaskManager {
     console.log(newTask);
   }
 }
-/* 
-const boss = new TaskManager();
-boss.addTask("1", "Task 1", "High");
-boss.addTask("2", "Task 2", "High");
-boss.addTask("3", "Task 3", "High");
-boss.viewAllTasks();
-boss.deleteTask(2);
-boss.viewAllTasks(); */
+
+export const TaskManager = TaskManagerSingleton.getInstance();
+const TaskManager2 = TaskManagerSingleton.getInstance();
+console.log(TaskManager);
+console.log(TaskManager2);
