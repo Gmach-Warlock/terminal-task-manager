@@ -1,5 +1,5 @@
 import readline from "readline";
-import { checkNum, addTaskHelper } from "./helpers/clean.js";
+import { checkNum, addTaskHelper } from "../utils/cleanAndGuard.js";
 
 // creates the readline interface
 const rl = readline.createInterface({
@@ -23,9 +23,8 @@ export async function getAnswer(question) {
   return answer;
 }
 
-function taskComplete(instance, id, complete = true) {
-  if (complete) return instance.markTaskComplete(id);
-  return instance.markTaskIncomplete(id);
+export function handlePrompt() {
+  const answer = getAnswer("Choose an option: ");
 }
 
 // returns appropriate action sequence based on input

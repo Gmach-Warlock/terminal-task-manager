@@ -1,10 +1,8 @@
-import { getAnswer, displayMenu } from "./menuHelpers.js";
-import { TaskManager } from "./TaskManager.js";
+import { displayMenu } from "./src/view/menu.js";
+import { TaskManager } from "./src/model/TaskManager.js";
 
 function app() {
-  const taskManager = new TaskManager();
   displayMenu();
-  const answer = getAnswer("Choose an option: ");
 }
 
 app();

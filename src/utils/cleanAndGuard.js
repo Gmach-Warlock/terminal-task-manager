@@ -24,22 +24,3 @@ export function checkNum(number) {
   let stringVal = String(numVal);
   return stringVal;
 }
-
-// gets title, description, priority for use in add and edit methods
-export function addHelper() {
-  const title = getAnswer(respondToInput(1));
-  const description = getAnswer("Please describe your task: ");
-  const priority = getAnswer("Is this of low, medium, or high priority? ");
-  if (
-    !isCleanString(title) ||
-    !isCleanString(description) ||
-    !isCleanString(priority)
-  )
-    return;
-  if (!isValidPriority(priority)) return;
-  return {
-    title,
-    description,
-    priority,
-  };
-}

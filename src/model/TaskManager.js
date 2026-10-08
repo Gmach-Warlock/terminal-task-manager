@@ -1,5 +1,5 @@
-import createTask from "./taskFactories.js";
-import { isValidIndex } from "../helpers/clean.js";
+import createTask from "../controller/taskFactories.js";
+import { isValidIndex } from "../utils/cleanAndGuard.js";
 
 export class TaskManagerSingleton {
   static #instance = null;
@@ -14,7 +14,7 @@ export class TaskManagerSingleton {
   }
   static getInstance() {
     if (this.#instance === null) {
-      this.#instance = new TaskManager();
+      this.#instance = new TaskManagerSingleton();
     }
     return this.#instance;
   }
@@ -56,6 +56,3 @@ export class TaskManagerSingleton {
 }
 
 export const TaskManager = TaskManagerSingleton.getInstance();
-const TaskManager2 = TaskManagerSingleton.getInstance();
-console.log(TaskManager);
-console.log(TaskManager2);

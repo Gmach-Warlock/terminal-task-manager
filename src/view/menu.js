@@ -18,3 +18,18 @@ export function displayMenu() {
     
     `);
 }
+
+export function logTasks(arr) {
+  console.log(`
+    Here are the current tasks: 
+  `);
+  arr.forEach((item) =>
+    console.log(`
+    title: ${item.title}, 
+    description: ${item.description},
+    priority: ${item.priority},
+    isCompleted: ${item.completed}, 
+    -------------------------------------
+    `),
+  );
+}
