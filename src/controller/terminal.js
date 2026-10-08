@@ -1,5 +1,10 @@
 import readline from "readline";
-import { checkNum, addTaskHelper } from "../utils/cleanAndGuard.js";
+import {
+  checkNum,
+  addTaskHelper,
+  isValidIndex,
+  checkAndConvertNum,
+} from "../utils/cleanAndGuard.js";
 
 // creates the readline interface
 const rl = readline.createInterface({
@@ -23,29 +28,58 @@ export async function getAnswer(question) {
   return answer;
 }
 
+// Main menu prompt question
 export function handlePrompt() {
   const answer = getAnswer("Choose an option: ");
+  const cleanAnswer = checkAndConvertNum(answer);
+  if (!cleanAnswer) return;
+  return cleanAnswer;
+}
+// filter questions
+export async function filterFirstQuestion() {
+  const firstAnswer = await getAnswer(`
+    Do you Want to filter by priority or completion? 
+    1. Priority
+    2. Completion
+
+    Please choose 1 or 2: 
+    `).toLowerCase();
+  if (firstAnswer !== 1 && firstAnswer !== 2) {
+    console.log(`Please choose 1 or 2`);
+    return;
+  }
+  return firstAnswer;
+}
+export async function filterSecondQuestion(number) {
+  if (number !== 1 && number !== 2) return;
+  const lookup = {
+    1: async () =>
+      await getAnswer(`
+      low, medium, or high priority? 
+      1. Low
+      2. Medium
+      3. High
+      4. All
+
+      Please choose one: 
+      `).toLowerCase(),
+    2: async () =>
+      await getAnswer(`
+      1. Completed
+      2. Not completed
+      3. All
+      `),
+  };
+  return lookup[number];
 }
 
-// returns appropriate action sequence based on input
-export function returnAppropriateAction(value, instance) {
-  const lookup = {
-    1: () => addTaskHelper(instance),
-    2: () => viewAll(instance),
-    3: () => {
-      const id = getAnswer("What is the id of the task to mark complete? ");
-      taskComplete(instance, id);
-    },
-    4: () => {
-      const id = getAnswer("What is id of the task to mark incomplete? ");
-      taskComplete(instance, id, false);
-    },
-    5: () => console.log("standby"),
-    6: () => console.log("standby"),
-    7: () => console.log("standby"),
-    8: () => console.log("standby"),
-    9: () => console.log("standby"),
-    10: () => console.log("roll em up"),
-  };
-  return lookup[checkNum(value)];
+// search question
+export async function searchQuestion() {
+  const searchTerm = await getAnswer(
+    `What is the term in the Title to search for? `,
+  );
+  return searchTerm;
 }
+
+// sort questions
+export async function sortQuestion() {}

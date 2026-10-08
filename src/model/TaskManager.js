@@ -1,14 +1,17 @@
 import createTask from "../controller/taskFactories.js";
 import { isValidIndex } from "../utils/cleanAndGuard.js";
 
+// Singleton class. Instance is exported on the bottom
 export class TaskManagerSingleton {
   static #instance = null;
 
   tasks;
+  listeners;
   size;
   totalCreated;
   constructor() {
     this.tasks = [];
+    this.listeners = [];
     this.size = 0;
     this.totalCreated = 0;
   }
@@ -37,7 +40,7 @@ export class TaskManagerSingleton {
   }
   deleteTask(id) {
     if (!isValidIndex(this.tasks, id)) return;
-    this.tasks.splice(index, 1);
+    this.tasks.filter((task) => task.id !== id);
   }
   editTask(id, newTitle, newDescription) {
     if (!isValidIndex(this.tasks, id)) return;
@@ -52,6 +55,11 @@ export class TaskManagerSingleton {
   }
   sortTasks(newTask) {
     console.log(newTask);
+  }
+
+  notify() {}
+  subscribe(listener) {
+    this.listeners.push(listener);
   }
 }
 

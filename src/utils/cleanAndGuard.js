@@ -18,7 +18,7 @@ export function isValidIndex(arr, id) {
   return true;
 }
 // makes sure number is in range, then converts to string for lookup
-export function checkNum(number) {
+export function checkAndConvertNum(number) {
   let numVal = Number(number);
   if (numVal > 10 || numVal < 1) return;
   let stringVal = String(numVal);

@@ -5,6 +5,7 @@ function timeStamp() {
   const date = newUnformatted.toISOString();
   return date;
 }
+
 // task factory
 export default function createTask(title, description, priority) {
   const newId = crypto.randomUUID();
