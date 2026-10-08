@@ -1,4 +1,4 @@
-import taskFactory from "../helpers/factory.js";
+import taskFactory from "../helpers/taskFactory.js";
 
 export class TaskManager {
   tasks;

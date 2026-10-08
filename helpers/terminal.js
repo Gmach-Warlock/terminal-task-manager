@@ -1,27 +1,5 @@
-import readline from "readline";
-
-// creates the readline interface
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-// helper to getAnswer
-function askQuestion(question) {
-  return new Promise((resolve) => {
-    rl.question(question, (answer) => {
-      resolve(answer);
-    });
-  });
-}
-
-// returns the input value entered by the user in the terminal
-export async function getAnswer(question) {
-  const answer = await askQuestion(question);
-  console.log(answer);
-  return answer;
-}
-
+import { checkNum, isCleanString, isValidPriority } from "./clean.js";
+import { getAnswer } from "./getAnswer.js";
 // displays the main menu prompt
 export function displayMenu() {
   console.log(`
@@ -41,14 +19,6 @@ export function displayMenu() {
     `);
 }
 
-// makes sure number is in range, then converts to string for lookup
-function cleanAndConvertNum(number) {
-  let numVal = Number(number);
-  if (numVal > 10 || numVal < 1) return;
-  let stringVal = String(numVal);
-  return stringVal;
-}
-
 // gives the first response of the chain for each choice
 export function respondToInput(value) {
   const lookup = {
@@ -63,5 +33,5 @@ export function respondToInput(value) {
     9: "What would you like to filter by? ",
     10: "Are you sure you want to quit? ",
   };
-  return lookup[cleanAndConvertNum(value)];
+  return lookup[checkNum(value)];
 }

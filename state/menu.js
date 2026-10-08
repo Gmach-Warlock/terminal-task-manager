@@ -1,8 +1,4 @@
-import {
-  displayMenu,
-  respondToInput,
-  getAnswer,
-} from "../helpers/menuHelpers.js";
+import { displayMenu, respondToInput, getAnswer } from "../helpers/terminal.js";
 
 export async function mainMenu() {
   console.log(`Welcome to Task Manager`);
