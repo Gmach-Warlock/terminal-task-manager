@@ -1,4 +1,4 @@
-import createTask from "../controller/taskFactories.js";
+import createTask from "../controller/tasks/taskFactories.js";
 import { isValidIndex } from "../utils/cleanAndGuard.js";
 
 // Singleton class. Instance is exported on the bottom

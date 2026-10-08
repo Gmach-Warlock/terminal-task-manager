@@ -1,4 +1,4 @@
-import { isCleanString, isValidPriority } from "../utils/cleanAndGuard";
+import { isCleanString, isValidPriority } from "../../utils/cleanAndGuard";
 export function taskValidator(task) {
   if (!task.description || !task.title || !task.priority) return false;
   if (

@@ -1,4 +1,4 @@
-import { isCleanString } from "../utils/cleanAndGuard";
+import { isCleanString } from "../../utils/cleanAndGuard";
 
 export function searchTasks(arr, searchTerm) {
   if (!isCleanString(searchTerm)) return;

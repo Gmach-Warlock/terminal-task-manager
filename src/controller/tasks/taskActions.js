@@ -1,5 +1,5 @@
 import { createInfoObj } from "./taskFactories";
-import { getAnswer } from "./terminal";
+import { getAnswer } from "../terminal/terminal";
 
 // helpers for the lookup
 export function addTaskHelper(instance) {

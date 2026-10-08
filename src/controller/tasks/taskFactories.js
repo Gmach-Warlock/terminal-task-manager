@@ -1,4 +1,4 @@
-import Task from "../model/Task.js";
+import Task from "../../model/Task.js";
 // helper for createdAt
 function timeStamp() {
   const newUnformatted = new Date();
