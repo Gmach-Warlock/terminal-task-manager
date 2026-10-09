@@ -1,18 +1,32 @@
-import { getAnswer } from "./terminal";
+import { checkAndConvertNum } from "../../utils/cleanAndGuard.js";
+import { returnAppropriateAction } from "../tasks/taskActions.js";
+import { getAnswer } from "./terminal.js";
 
 export async function getSortInput1() {
-  const answer = await getAnswer(`
-        What is the sorting criteria? 
-        1. Time of Creation
-        2. Priority
-        3. Info
-        `);
-  if (answer !== 1 && answer !== 2 && answer !== 3) return;
+  const message = `
+  What is the sorting criteria?
+  1. Time of Creation
+  2. Priority
+  3. Info
+
+  Please choose 1, 2, or 3: 
+  `;
+  let hasAnswer = false;
+  let answer = await getAnswer(message);
+  while (!hasAnswer) {
+    if (!checkAndConvertNum(answer, 1, 3)) {
+      console.log(`Please enter 1, 2, or 3`);
+      answer = await getAnswer(message);
+    }
+    if (checkAndConvertNum(answer, 1, 3)) hasAnswer = true;
+  }
+
   const lookup = {
     1: "createdAt",
     2: "priority",
     3: "info",
   };
+  console.log(lookup[answer]);
   return lookup[answer];
 }
 // Get value to use in getSortInput2 (decoupled to keep functions small)
@@ -40,6 +54,7 @@ export async function getSortValue2(type) {
   if (answer !== 1 && answer !== 2 && answer !== 3) return;
   return answer;
 }
+
 export async function getSortInput2(value) {
   if (value !== 1 && value !== 2 && value !== 3) return;
   const answerLookup = {
@@ -59,3 +74,5 @@ export async function getSortInput2(value) {
   };
   return answerLookup[value];
 }
+
+console.log(getSortInput1());

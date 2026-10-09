@@ -1,3 +1,7 @@
+import { returnAppropriateAction } from "../controller/tasks/taskActions.js";
+import { getNumericInput } from "../controller/terminal/terminal.js";
+import { TaskManager } from "../model/TaskManager.js";
+
 // displays the main menu prompt
 export function displayMenu() {
   console.log(`
@@ -17,6 +21,7 @@ export function displayMenu() {
     10. Exit 
     
     `);
+  return;
 }
 
 export function logTasks(arr) {
@@ -33,3 +38,11 @@ export function logTasks(arr) {
     `),
   );
 }
+
+export async function mainMenu() {
+  displayMenu();
+  const answer = await getNumericInput("Choose an option: ");
+  returnAppropriateAction(answer, TaskManager);
+}
+
+mainMenu();

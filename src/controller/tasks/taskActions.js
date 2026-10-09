@@ -1,10 +1,17 @@
-import { createInfoObj } from "./taskFactories";
-import { getAnswer } from "../terminal/terminal";
+import { createInfoObj } from "./taskFactories.js";
+import { getAnswer } from "../terminal/terminal.js";
 
 // helpers for the lookup
-export function addTaskHelper(instance) {
-  const lookup = createInfoObj();
-  instance.addTask(lookup.title, lookup.description, lookup.priority);
+export async function addTaskHelper(instance) {
+  const title = await getAnswer("What is the title of the task?");
+  const description = await getAnswer(
+    "Please give a brief description of your task: ",
+  );
+  const priority = await getAnswer(
+    "Is this low, medium, or high priority?",
+  ).toLowerCase();
+  instance.addTask(title, description, priority);
+  console.log(`New task successfully added`);
 }
 export function editTaskHelper(instance) {
   const id = getAnswer("What is the id of the task to edit? ");
@@ -35,20 +42,14 @@ export function returnAppropriateAction(value, instance) {
   const lookup = {
     1: () => addTaskHelper(instance),
     2: () => viewAll(instance),
-    3: () => {
-      const id = getAnswer("What is the id of the task to mark complete? ");
-      taskComplete(instance, id);
-    },
-    4: () => {
-      const id = getAnswer("What is id of the task to mark incomplete? ");
-      taskComplete(instance, id, false);
-    },
-    5: () => console.log("standby"),
-    6: () => console.log("standby"),
+    3: () => taskComplete(instance),
+    4: () => taskComplete(instance, false),
+    5: () => editTaskHelper(instance),
+    6: () => deleteTaskHelper(instance),
     7: () => console.log("standby"),
     8: () => console.log("standby"),
     9: () => console.log("standby"),
-    10: () => console.log("roll em up"),
+    10: () => quitApp(),
   };
   return lookup[checkNum(value)];
 }

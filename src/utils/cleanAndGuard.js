@@ -1,6 +1,9 @@
 // guard functions
 export function isCleanString(str) {
   if (typeof str !== "string") return false;
+  const htmlRegex = /<[^>]*>/;
+  // This regex.test returns true if there is an html tag in the string
+  if (htmlRegex.test(str)) return false;
   return true;
 }
 export function isValidPriority(string) {
@@ -18,9 +21,11 @@ export function isValidIndex(arr, id) {
   return true;
 }
 // makes sure number is in range, then converts to string for lookup
-export function checkAndConvertNum(number) {
+export function checkAndConvertNum(number, min = 1, max = 10) {
   let numVal = Number(number);
-  if (numVal > 10 || numVal < 1) return;
+  if (numVal > max || numVal < min) return;
   let stringVal = String(numVal);
   return stringVal;
 }
+
+console.log(isCleanString("<Clean>"));

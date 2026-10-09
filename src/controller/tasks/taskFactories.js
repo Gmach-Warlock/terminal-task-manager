@@ -31,3 +31,5 @@ export function createInfoObj() {
     priority,
   };
 }
+
+// console.log(createTask("First Task", "Description of first task", "low"));

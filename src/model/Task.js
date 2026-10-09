@@ -6,13 +6,13 @@ export default class Task {
   #priority;
   createdAt;
 
-  constructor(id, title, description, priority, createdAt) {
-    this.id = id;
+  constructor(title, description, priority) {
+    this.id = crypto.randomUUID();
     this._title = title;
     this._description = description;
     this._completed = false;
     this._priority = priority;
-    this.createdAt = createdAt;
+    this.createdAt = new Date().toISOString;
   }
 
   get id() {
