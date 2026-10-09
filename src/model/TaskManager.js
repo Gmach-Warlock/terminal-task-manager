@@ -9,11 +9,13 @@ export class TaskManagerSingleton {
   listeners;
   size;
   totalCreated;
+  isRunning;
   constructor() {
     this.tasks = [];
     this.listeners = [];
     this.size = 0;
     this.totalCreated = 0;
+    this.start();
   }
   static getInstance() {
     if (this.#instance === null) {
@@ -55,6 +57,12 @@ export class TaskManagerSingleton {
   }
   sortTasks(newTask) {
     console.log(newTask);
+  }
+  start() {
+    this.isRunning = true;
+  }
+  quit() {
+    this.isRunning = false;
   }
 
   notify() {}

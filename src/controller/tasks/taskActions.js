@@ -25,6 +25,10 @@ export function deleteTaskHelper(instance) {
   const id = getAnswer("What is the id of the task to delete? ");
   return instance.deleteTask(id);
 }
+export async function quitApp(instance) {
+  const answer = await getAnswer(getFinalConfirmation());
+  return instance.quit();
+}
 
 // returns appropriate action sequence based on input
 export function returnAppropriateAction(value, instance) {

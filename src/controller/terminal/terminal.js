@@ -1,10 +1,4 @@
 import readline from "readline";
-import {
-  checkNum,
-  addTaskHelper,
-  isValidIndex,
-  checkAndConvertNum,
-} from "../../utils/cleanAndGuard.js";
 
 // creates the readline interface
 const rl = readline.createInterface({
@@ -26,4 +20,13 @@ export async function getAnswer(question) {
   const answer = await askQuestion(question);
   console.log(answer);
   return answer;
+}
+
+export async function getMainInput() {
+  const input = await getAnswer(`Choose an option: `);
+  if (input > 10 || input < 1) {
+    console.log(`Please choose a number from 1 to 10`);
+    return;
+  }
+  return input;
 }
