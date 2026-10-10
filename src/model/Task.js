@@ -12,7 +12,7 @@ export default class Task {
     this._description = description;
     this._completed = false;
     this._priority = priority;
-    this.createdAt = new Date().toISOString;
+    this.createdAt = new Date().toISOString();
   }
 
   get id() {

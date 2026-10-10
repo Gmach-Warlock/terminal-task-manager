@@ -1,4 +1,4 @@
-export class ClassStore {
+export class TaskStore {
   static #instance = null;
 
   constructor() {
@@ -14,7 +14,7 @@ export class ClassStore {
 
   static getInstance() {
     if (this.#instance === null) {
-      this.#instance = new ClassStore();
+      this.#instance = new TaskStore();
     }
     return this.#instance;
   }
@@ -28,3 +28,6 @@ export class ClassStore {
     this.listeners.push(listener);
   }
 }
+
+export const taskStore = TaskStore.getInstance();
+console.log(taskStore);

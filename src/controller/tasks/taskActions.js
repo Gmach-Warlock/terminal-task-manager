@@ -1,40 +1,57 @@
-import { createInfoObj } from "./taskFactories.js";
-import { getAnswer } from "../terminal/terminal.js";
+import { taskStore } from "../../model/taskStore.js";
+import Task from "../../model/Task.js";
+import { getStringInput } from "../terminal/terminal.js";
 
-// helpers for the lookup
-export async function addTaskHelper(instance) {
-  const title = await getAnswer("What is the title of the task?");
-  const description = await getAnswer(
-    "Please give a brief description of your task: ",
+export async function addTaskToStore() {
+  const title = await getStringInput("Please give your task a title: ");
+  const description = await getStringInput(
+    "Please give a short description of your task: ",
   );
-  const priority = await getAnswer(
-    "Is this low, medium, or high priority?",
-  ).toLowerCase();
-  instance.addTask(title, description, priority);
-  console.log(`New task successfully added`);
-}
-export function editTaskHelper(instance) {
-  const id = getAnswer("What is the id of the task to edit? ");
-  const lookup = createInfoObj();
-  instance.editTask(id, lookup.title, lookup.description, lookup.priority);
-}
-export function viewAll(instance) {
-  instance.viewAllTasks();
-}
-export function taskComplete(instance, complete = true) {
-  const id = getAnswer(
-    `What is the id of the task that is ${complete ? "" : "not"} completed? `,
+  const priority = await getStringInput(
+    "Is this low, medium, or high priority? ",
   );
-  if (complete) return instance.markTaskComplete(id);
-  return instance.markTaskIncomplete(id);
+  const task = new Task(title, description, priority);
+  const newState = [...taskStore.tasks, task];
+  console.log(newState);
+  taskStore.tasks = newState;
 }
-export function deleteTaskHelper(instance) {
-  const id = getAnswer("What is the id of the task to delete? ");
-  return instance.deleteTask(id);
+
+export async function removeTaskFromStore() {
+  const title = await getStringInput(
+    "What is the title of the task to remove? ",
+  );
+  const task = taskStore.tasks.find((task) => task.title === title);
+  if (!task) {
+    console.log("Title not found");
+    return;
+  }
+  const newArray = taskStore.tasks.filter((task) => task.title !== title);
+  taskStore.tasks = newArray;
 }
-export async function quitApp(instance) {
-  const answer = await getAnswer(getFinalConfirmation());
-  return instance.quit();
+
+export function editTaskInStore(title, newTitle, newDescription, newPriority) {
+  const task = taskStore.tasks.find((task) => task.title === title);
+  if (!task) {
+    console.log("Id not found");
+    return;
+  }
+  task.title = newTitle;
+  task.description = newDescription;
+  task.priority = newPriority;
+}
+
+export function viewAllTasks() {
+  console.log(`Here are your tasks: `);
+  taskStore.tasks.forEach((task) =>
+    console.log(`
+    title: ${task.title}
+    description: ${task.description}
+    priority: ${task.priority}
+    completed: ${task.completed}
+    createdAt: ${task.createdAt}
+    -----------------------------------
+    `),
+  );
 }
 
 // returns appropriate action sequence based on input
@@ -53,3 +70,6 @@ export function returnAppropriateAction(value, instance) {
   };
   return lookup[checkNum(value)];
 }
+
+addTaskToStore();
+addTaskToStore();
