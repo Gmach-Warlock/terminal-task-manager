@@ -1,6 +1,6 @@
-import { taskStore } from "../../model/taskStore";
-import { logTasks } from "../../view/menu";
-import { getNumericInput } from "../terminal/terminal";
+import { taskStore } from "../../model/taskStore.js";
+import { logTasks } from "../../view/menu.js";
+import { getFilterInfo } from "../terminal/filterPrompts.js";
 
 function makeFilterArrayByStatus(status) {
   if (status !== "complete" && status !== "incomplete" && status !== "all")

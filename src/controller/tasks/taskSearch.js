@@ -1,4 +1,4 @@
-import { logTasks } from "../../view/menu";
+import { logTasks } from "../../view/menu.js";
 import { getSearchCriteria } from "../terminal/searchPrompts.js";
 
 function searchArray(term) {

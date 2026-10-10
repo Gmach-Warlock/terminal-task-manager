@@ -2,7 +2,7 @@ import readline from "readline";
 import {
   isCleanString,
   checkAndConvertNum,
-} from "../../utils/cleanAndGuard.js";
+} from "../../controller/tasks/taskValidator.js";
 
 // creates the readline interface
 const rl = readline.createInterface({

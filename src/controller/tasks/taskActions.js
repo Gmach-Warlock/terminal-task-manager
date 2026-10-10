@@ -1,8 +1,9 @@
 import { taskStore } from "../../model/taskStore.js";
-import Task from "../../model/Task.js";
-import { getNumericInput, getStringInput } from "../terminal/terminal.js";
+import { Task } from "../../model/Task.js";
+import { getStringInput } from "../terminal/terminal.js";
 import { filterTaskInStore } from "./taskFilters.js";
 import { getTitle } from "../terminal/infoPrompts.js";
+import { searchTasksInStore } from "./taskSearch.js";
 
 export async function addTaskToStore() {
   const title = await getTitle("add");
@@ -48,7 +49,7 @@ export async function editTaskInStore() {
   task[lookup.prop] = lookup.newValue;
 }
 
-async function markTask(completed = true) {
+async function markTaskInStore(completed = true) {
   const title = await getTitle();
   const task = taskStore.tasks.find((task) => task.title === title);
   if (!task) {
@@ -74,17 +75,22 @@ export function viewAllTasks() {
 
 // returns appropriate action sequence based on input
 export function returnAppropriateAction(value) {
+  const string = String(value);
+  console.log(string);
   const lookup = {
-    1: () => addTaskToStore(),
+    1: () => {
+      console.log("You're here");
+      addTaskToStore();
+    },
     2: () => viewAllTasks(),
-    3: () => markTask(),
-    4: () => markTask(false),
+    3: () => markTaskInStore(),
+    4: () => markTaskInStore(false),
     5: () => editTaskInStore(),
     6: () => removeTaskFromStore(),
-    7: () => console.log("search standby"),
+    7: () => searchTasksInStore(),
     8: () => console.log("sort standby"),
     9: () => filterTaskInStore(),
     10: () => quitApp(),
   };
-  return lookup[checkNum(value)];
+  return lookup[string]();
 }

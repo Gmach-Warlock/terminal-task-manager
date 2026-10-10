@@ -1,5 +1,4 @@
-import { title } from "node:process";
-import { getAnswer } from "./terminal";
+import { getAnswer, getStringInput } from "./terminal.js";
 
 // get title for edit or mark
 export async function getTitle(type) {

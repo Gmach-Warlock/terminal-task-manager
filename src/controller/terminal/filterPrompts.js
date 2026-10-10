@@ -1,4 +1,4 @@
-import { getNumericInput } from "./terminal";
+import { getNumericInput } from "./terminal.js";
 
 export async function getFilterInfo() {
   const numInput = await getNumericInput(

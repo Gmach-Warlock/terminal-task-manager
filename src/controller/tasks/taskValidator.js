@@ -1,5 +1,3 @@
-import { isCleanString, isValidPriority } from "../../utils/cleanAndGuard";
-
 export function isCleanString(str) {
   if (typeof str !== "string") return false;
   const htmlRegex = /<[^>]*>/;
