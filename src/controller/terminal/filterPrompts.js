@@ -1,15 +1,25 @@
-import { getAnswer } from "./terminal.js";
-// these functions return string values which will be used in taskFilters.js
-export async function getFilterInput() {
-  const answer = await getAnswer(`
-    Please choose a filter type: 
-    1. Complete
-    2. Incomplete
-    3. All
-    
-    Please choose 1, 2, or 3:  `);
-  if (answer !== 1 && answer !== 2 && answer !== 3) return;
-  return answer;
-}
+import { getNumericInput } from "./terminal";
 
-console.log(getFilterInput());
+export async function getFilterInfo() {
+  const numInput = await getNumericInput(
+    `
+    Please choose a filter criteria: 
+    1. Completed
+    2. Not Completed
+    3. Low Priority
+    4. Medium Priority
+    5. High Priority
+    6. All
+    `,
+    6,
+  );
+  const lookup = {
+    1: "completed",
+    2: "notCompleted",
+    3: "low",
+    4: "medium",
+    5: "high",
+    6: "all",
+  };
+  return lookup[numInput];
+}

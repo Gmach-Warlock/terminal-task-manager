@@ -24,12 +24,24 @@ export function displayMenu() {
   return;
 }
 
-export function logTasks(arr) {
-  console.log(`
-    Here are the current tasks: 
-  `);
+export function logTasks(arr, type) {
+  const lookup = {
+    all: "Here are all of the tasks: ",
+    filter: "Here are the filtered results: ",
+    search: "Here are the search results: ",
+    sort: "Here are the sorted results: ",
+  };
+  if (
+    type !== "all" &&
+    type !== "filter" &&
+    type !== "search" &&
+    type !== "search"
+  )
+    return;
+  console.log(lookup[type]);
   arr.forEach((item) =>
     console.log(`
+    
     title: ${item.title}, 
     description: ${item.description},
     priority: ${item.priority},

@@ -1,9 +1,11 @@
 import { taskStore } from "../../model/taskStore.js";
 import Task from "../../model/Task.js";
-import { getStringInput } from "../terminal/terminal.js";
+import { getNumericInput, getStringInput } from "../terminal/terminal.js";
+import { filterTaskInStore } from "./taskFilters.js";
+import { getTitle } from "../terminal/infoPrompts.js";
 
 export async function addTaskToStore() {
-  const title = await getStringInput("Please give your task a title: ");
+  const title = await getTitle("add");
   const description = await getStringInput(
     "Please give a short description of your task: ",
   );
@@ -29,15 +31,31 @@ export async function removeTaskFromStore() {
   taskStore.tasks = newArray;
 }
 
-export function editTaskInStore(title, newTitle, newDescription, newPriority) {
-  const task = taskStore.tasks.find((task) => task.title === title);
+export async function getEditInfo() {
+  const title = await getTitle(edit);
+  const prop = await getPropToModify();
+  const newValue = await getStringInput();
+  return { title, prop, newValue };
+}
+
+export async function editTaskInStore() {
+  const lookup = await getEditInfo();
+  const task = taskStore.tasks.find((task) => task.title === lookup.title);
   if (!task) {
-    console.log("Id not found");
+    console.log("Task title not found");
     return;
   }
-  task.title = newTitle;
-  task.description = newDescription;
-  task.priority = newPriority;
+  task[lookup.prop] = lookup.newValue;
+}
+
+async function markTask(completed = true) {
+  const title = await getTitle();
+  const task = taskStore.tasks.find((task) => task.title === title);
+  if (!task) {
+    console.log("A Task with that title could not be found.");
+    return;
+  }
+  task.completed = completed;
 }
 
 export function viewAllTasks() {
@@ -55,21 +73,18 @@ export function viewAllTasks() {
 }
 
 // returns appropriate action sequence based on input
-export function returnAppropriateAction(value, instance) {
+export function returnAppropriateAction(value) {
   const lookup = {
-    1: () => addTaskHelper(instance),
-    2: () => viewAll(instance),
-    3: () => taskComplete(instance),
-    4: () => taskComplete(instance, false),
-    5: () => editTaskHelper(instance),
-    6: () => deleteTaskHelper(instance),
-    7: () => console.log("standby"),
-    8: () => console.log("standby"),
-    9: () => console.log("standby"),
+    1: () => addTaskToStore(),
+    2: () => viewAllTasks(),
+    3: () => markTask(),
+    4: () => markTask(false),
+    5: () => editTaskInStore(),
+    6: () => removeTaskFromStore(),
+    7: () => console.log("search standby"),
+    8: () => console.log("sort standby"),
+    9: () => filterTaskInStore(),
     10: () => quitApp(),
   };
   return lookup[checkNum(value)];
 }
-
-addTaskToStore();
-addTaskToStore();

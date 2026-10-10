@@ -1,12 +1,7 @@
-import { getAnswer } from "./terminal";
+import { getStringInput } from "./terminal.js";
 
-export async function getSearchTerms() {
-  const answer = await getAnswer(
-    `What is the term in the title to search for? `,
-  );
-  if (!answer) {
-    console.log("Please provide an answer");
-    return;
-  }
-  return answer;
+export async function getSearchCriteria() {
+  const searchTerm = await getStringInput(`What is the term to search for? `);
+  const cleanedTerm = searchTerm.toLowerCase();
+  return cleanedTerm;
 }

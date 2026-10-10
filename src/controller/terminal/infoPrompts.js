@@ -1,18 +1,37 @@
 import { title } from "node:process";
 import { getAnswer } from "./terminal";
 
-// This is used to get the basic info used to create new tasks
-export async function getTaskInfo(type) {
-  if (type !== "title" && type !== "description" && title !== "priority")
-    return;
+// get title for edit or mark
+export async function getTitle(type) {
+  if (type !== "add" && type !== "edit" && type !== "delete") return;
   const lookup = {
-    title: "What is the title of your task? ",
-    description: "Please give a short description of your task: ",
-    priority: "Is this of low, medium, or high priority? ",
+    add: "Please give a title to your new task: ",
+    edit: "What is the title of the task to edit? ",
+    delete: "What is the title of the task to delete? ",
   };
-  const answer = await getAnswer(lookup[type]);
-  if (!answer) throw new Error("Something went wrong.");
-  return answer;
+  const title = await getStringInput(lookup[type]);
+  return title;
+}
+
+// get edit task info
+export async function getPropToModify() {
+  const num = await getNumericInput(
+    `
+    Please choose a property to modify: 
+    1. Title
+    2. Description
+    3. Priority
+    
+    Please enter the appropriate number: 
+    `,
+    3,
+  );
+  const lookup = {
+    1: "title",
+    2: "description",
+    3: "priority",
+  };
+  return lookup[num];
 }
 
 // final confirmation returns true or false

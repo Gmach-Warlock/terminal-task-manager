@@ -1,3 +1,5 @@
+import { logTasks } from "../view/menu.js";
+
 export class TaskStore {
   static #instance = null;
 
@@ -7,9 +9,10 @@ export class TaskStore {
   }
 
   notify() {
-    this.listeners.forEach((listener) => {
+    /*     this.listeners.forEach((listener) => {
       listener(this.tasks);
-    });
+    }); */
+    logTasks(this.tasks, "all");
   }
 
   static getInstance() {

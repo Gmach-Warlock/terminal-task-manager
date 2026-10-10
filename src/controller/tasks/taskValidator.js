@@ -1,4 +1,36 @@
 import { isCleanString, isValidPriority } from "../../utils/cleanAndGuard";
+
+export function isCleanString(str) {
+  if (typeof str !== "string") return false;
+  const htmlRegex = /<[^>]*>/;
+  // This regex.test returns true if there is an html tag in the string
+  if (htmlRegex.test(str)) return false;
+  return true;
+}
+export function isValidPriority(string) {
+  if (!isCleanString) return false;
+  if (string !== "low" && string !== "medium" && string !== "high")
+    return false;
+  return true;
+}
+export function isValidIndex(arr, id) {
+  const index = arr.findIndex((item) => item.id === id);
+  if (index === -1) {
+    console.log(`Index not found!`);
+    return false;
+  }
+  return true;
+}
+// makes sure number is in range, then converts to string for lookup
+export function checkAndConvertNum(number, min = 1, max = 10) {
+  let numVal = Number(number);
+  if (numVal > max || numVal < min) return;
+  let stringVal = String(numVal);
+  return stringVal;
+}
+
+console.log(isCleanString("<Clean>"));
+
 export function taskValidator(task) {
   if (!task.description || !task.title || !task.priority) return false;
   if (
