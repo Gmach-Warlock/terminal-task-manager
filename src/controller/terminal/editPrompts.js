@@ -3,7 +3,7 @@ import {
   getTaskDescription,
   getTaskPriority,
 } from "./infoPrompts.js";
-import { getNumericInput } from "./terminal.js";
+import { getNumericInput, getStringInput } from "./terminal.js";
 // get edit task info
 export async function getTaskPropToModify() {
   const num = await getNumericInput(
@@ -26,14 +26,13 @@ export async function getTaskPropToModify() {
 }
 
 export async function getEditInfo() {
-  console.log("in edit info");
   const title = await getTaskTitle("edit");
   const prop = await getTaskPropToModify();
   const lookup = {
-    title: () => getTaskTitle(false),
+    title: () => getStringInput(`What is the new title of your task? `),
     description: () => getTaskDescription(false),
     priority: () => getTaskPriority(false),
   };
-  const newValue = await lookup[prop];
+  const newValue = await lookup[prop]();
   return { title, prop, newValue };
 }

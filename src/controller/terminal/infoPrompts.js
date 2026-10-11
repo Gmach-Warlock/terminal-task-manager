@@ -19,7 +19,6 @@ export async function getTaskTitle(type) {
     incomplete: "What is the title of the task to mark incomplete? ",
   };
   const title = await getStringInput(lookup[type]);
-  console.log(title);
   return title;
 }
 
@@ -33,24 +32,29 @@ export async function getTaskDescription(newTask = true) {
   return description;
 }
 
-export function getTaskPriority(newTask = true) {
+export async function getTaskPriority(newTask = true) {
   const lookup = {
     new: `Is this new task a low, medium, or high priority?`,
     edit: `Is the new priority low, medium, or high? `,
   };
   const type = newTask ? "new" : "edit";
-  const priority = getNumericInput(
+  const priority = await getNumericInput(
     `
-    ${lookup[type]}
-    1. Low
-    2. Medium
-    3. High
+${lookup[type]}
+1. Low
+2. Medium
+3. High
 
-    Please choose the appropriate value: 
+Please choose the appropriate value: 
     `,
     3,
   );
-  return priority;
+  const lookup2 = {
+    1: "Low",
+    2: "Medium",
+    3: "High",
+  };
+  return lookup2[priority];
 }
 
 export async function getAddInfo() {
@@ -70,7 +74,6 @@ export async function getMarkTitle(complete = true) {
   const title = complete
     ? await getTaskTitle("complete")
     : await getTaskTitle("incomplete");
-  console.log(title);
   if (!isCleanString(title)) return;
   return title;
 }

@@ -19,13 +19,13 @@ export function deleteItem(arr, title) {
 export function editItem(arr, title, prop, newValue) {
   console.log(`in edit item`);
   const newArray = [...arr];
-  console.log(newArray);
   const itemToEdit = newArray.find((item) => item._title === title);
   if (!itemToEdit) {
     console.log("Item with that term in title does not exist");
     return;
   }
   itemToEdit[prop] = newValue;
+  console.log(itemToEdit);
   return itemToEdit;
 }
 

@@ -38,7 +38,9 @@ export async function removeTaskFromStore() {
 }
 
 export async function editTaskInStore() {
+  console.log("starting editTaskInStore");
   const lookup = await getEditInfo();
+  console.log(lookup);
   const edittedItem = editItem(
     taskStore.tasks,
     lookup.title,
