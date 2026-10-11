@@ -1,6 +1,5 @@
-import { myListener, taskStore } from "../../model/taskStore.js";
+import { taskStore } from "../../model/taskStore.js";
 import { Task } from "../../model/Task.js";
-import { getStringInput } from "../terminal/terminal.js";
 import { filterTaskInStore } from "./taskFilters.js";
 import {
   getMarkTitle,
@@ -11,8 +10,8 @@ import {
 import { searchTasksInStore } from "./taskSearch.js";
 import { addItem, editItem } from "./taskHelpers.js";
 import { mainMenu, logTasks } from "../../view/menu.js";
-import { isCleanString } from "./taskValidator.js";
 import { taskApp } from "../../model/TaskApp.js";
+import { taskTotals } from "../../model/TaskTotals.js";
 
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
@@ -20,7 +19,8 @@ export async function addTaskToStore() {
   const priority = await getTaskPriority();
   const task = new Task(title, description, priority);
   console.clear();
-  const newState = addItem(taskStore.tasks, task);
+  const newState = await addItem(taskStore.tasks, task);
+  taskTotals.addTaskTotals();
   taskStore.setTasks(newState);
   mainMenu();
 }

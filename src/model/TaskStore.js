@@ -1,12 +1,19 @@
 import { logTasks } from "../view/menu.js";
+import { taskTotals } from "./TaskTotals.js";
 
 export function myListener() {
-  console.log("Tasks have been updated. ");
-  logTasks(taskStore.tasks, "all");
+  console.log(taskTotals.total);
+  if (taskTotals.total > 0) {
+    console.log("Tasks have been updated. ");
+    logTasks(taskStore.tasks, "all");
+  }
 }
 
 export class TaskStore {
   static #instance = null;
+
+  tasks;
+  listeners;
 
   constructor() {
     this.tasks = [];

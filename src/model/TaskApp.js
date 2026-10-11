@@ -12,9 +12,12 @@ class TaskApp {
   running;
 
   constructor() {
-    this.running = true;
+    this.startApp();
   }
 
+  startApp() {
+    this.running = true;
+  }
   quitApp() {
     this.running = false;
     rl.close();
