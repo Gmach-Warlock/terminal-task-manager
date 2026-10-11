@@ -1,5 +1,10 @@
 import { logTasks } from "../view/menu.js";
 
+export function myListener() {
+  console.log("Tasks have been updated. ");
+  logTasks(taskStore.tasks, "all");
+}
+
 export class TaskStore {
   static #instance = null;
 
@@ -9,10 +14,9 @@ export class TaskStore {
   }
 
   notify() {
-    /*     this.listeners.forEach((listener) => {
-      listener(this.tasks);
-    }); */
-    logTasks(this.tasks, "all");
+    this.listeners.forEach(() => {
+      myListener();
+    });
   }
 
   static getInstance() {
@@ -24,7 +28,7 @@ export class TaskStore {
 
   setTasks(tasks) {
     this.tasks = tasks;
-    this.notify;
+    this.notify();
   }
 
   subscribe(listener) {
@@ -33,4 +37,6 @@ export class TaskStore {
 }
 
 export const taskStore = TaskStore.getInstance();
-console.log(taskStore);
+
+// subscribe to the listener for the app
+taskStore.subscribe(myListener());

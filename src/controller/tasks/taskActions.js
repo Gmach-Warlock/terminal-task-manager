@@ -1,87 +1,80 @@
-import { taskStore } from "../../model/taskStore.js";
+import { myListener, taskStore } from "../../model/taskStore.js";
 import { Task } from "../../model/Task.js";
 import { getStringInput } from "../terminal/terminal.js";
 import { filterTaskInStore } from "./taskFilters.js";
-import { getTitle } from "../terminal/infoPrompts.js";
+import {
+  getMarkTitle,
+  getTaskDescription,
+  getTaskPriority,
+  getTaskTitle,
+} from "../terminal/infoPrompts.js";
 import { searchTasksInStore } from "./taskSearch.js";
+import { addItem, editItem } from "./taskHelpers.js";
+import { mainMenu, logTasks } from "../../view/menu.js";
+import { isCleanString } from "./taskValidator.js";
+import { taskApp } from "../../model/TaskApp.js";
 
 export async function addTaskToStore() {
-  const title = await getTitle("add");
-  const description = await getStringInput(
-    "Please give a short description of your task: ",
-  );
-  const priority = await getStringInput(
-    "Is this low, medium, or high priority? ",
-  );
+  const title = await getTaskTitle("add");
+  const description = await getTaskDescription();
+  const priority = await getTaskPriority();
   const task = new Task(title, description, priority);
-  const newState = [...taskStore.tasks, task];
-  console.log(newState);
-  taskStore.tasks = newState;
+  console.clear();
+  const newState = addItem(taskStore.tasks, task);
+  taskStore.setTasks(newState);
+  mainMenu();
 }
 
 export async function removeTaskFromStore() {
-  const title = await getStringInput(
-    "What is the title of the task to remove? ",
-  );
+  const title = await getTaskTitle("delete");
   const task = taskStore.tasks.find((task) => task.title === title);
   if (!task) {
     console.log("Title not found");
     return;
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
-  taskStore.tasks = newArray;
-}
-
-export async function getEditInfo() {
-  const title = await getTitle(edit);
-  const prop = await getPropToModify();
-  const newValue = await getStringInput();
-  return { title, prop, newValue };
+  taskStore.setTasks(newArray);
 }
 
 export async function editTaskInStore() {
   const lookup = await getEditInfo();
-  const task = taskStore.tasks.find((task) => task.title === lookup.title);
-  if (!task) {
-    console.log("Task title not found");
-    return;
-  }
-  task[lookup.prop] = lookup.newValue;
+  const newArray = editItem(
+    taskStore.tasks,
+    lookup.title,
+    lookup.prop,
+    lookup.newValue,
+  );
+  taskStore.setTasks(newArray);
+  mainMenu();
 }
 
 async function markTaskInStore(completed = true) {
-  const title = await getTitle();
-  const task = taskStore.tasks.find((task) => task.title === title);
-  if (!task) {
-    console.log("A Task with that title could not be found.");
-    return;
-  }
-  task.completed = completed;
+  const title = getMarkTitle();
+  const newArray = completed
+    ? editItem(taskStore.tasks, title, "completed", true)
+    : editItem(taskStore.tasks, title, "completed", false);
+  taskStore.setTasks(newArray);
+  mainMenu();
 }
 
 export function viewAllTasks() {
+  console.clear();
   console.log(`Here are your tasks: `);
-  taskStore.tasks.forEach((task) =>
-    console.log(`
-    title: ${task.title}
-    description: ${task.description}
-    priority: ${task.priority}
-    completed: ${task.completed}
-    createdAt: ${task.createdAt}
-    -----------------------------------
-    `),
-  );
+  logTasks(taskStore.tasks, "all");
+  mainMenu();
+}
+
+function quitTaskApp() {
+  console.log(`Thank you for using the Task App. 
+    Goodbye.`);
+  taskApp.quitApp();
 }
 
 // returns appropriate action sequence based on input
 export function returnAppropriateAction(value) {
   const string = String(value);
-  console.log(string);
   const lookup = {
-    1: () => {
-      console.log("You're here");
-      addTaskToStore();
-    },
+    1: () => addTaskToStore(),
     2: () => viewAllTasks(),
     3: () => markTaskInStore(),
     4: () => markTaskInStore(false),
@@ -90,7 +83,7 @@ export function returnAppropriateAction(value) {
     7: () => searchTasksInStore(),
     8: () => console.log("sort standby"),
     9: () => filterTaskInStore(),
-    10: () => quitApp(),
+    10: () => quitTaskApp(),
   };
   return lookup[string]();
 }

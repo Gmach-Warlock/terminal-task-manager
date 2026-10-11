@@ -27,8 +27,6 @@ export function checkAndConvertNum(number, min = 1, max = 10) {
   return stringVal;
 }
 
-console.log(isCleanString("<Clean>"));
-
 export function taskValidator(task) {
   if (!task.description || !task.title || !task.priority) return false;
   if (

@@ -17,16 +17,14 @@ export function deleteItem(arr, title) {
 }
 
 export function editItem(arr, title, prop, newValue) {
-  const itemToEdit = arr.find((item) => item.title === title);
+  const newArray = [...arr];
+  const itemToEdit = newArray.find((item) => item.title === title);
   if (!itemToEdit) {
     console.log("Item with that term in title does not exist");
     return;
   }
-  const newItem = {
-    ...itemToEdit,
-    [prop]: newValue,
-  };
-  return newItem;
+  itemToEdit[prop] = newValue;
+  return newArray;
 }
 
 export function filterByCategory(arr, category, value) {

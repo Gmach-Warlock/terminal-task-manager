@@ -5,7 +5,7 @@ import {
 } from "../../controller/tasks/taskValidator.js";
 
 // creates the readline interface
-const rl = readline.createInterface({
+export const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
@@ -20,7 +20,7 @@ function askQuestion(question) {
 }
 
 // returns the input value entered by the user in the terminal
-export async function getAnswer(question) {
+async function getAnswer(question) {
   const answer = await askQuestion(question);
   return answer;
 }
@@ -49,4 +49,24 @@ export async function getStringInput(message) {
     if (isCleanString(answer)) hasAnswer = true;
   }
   return answer;
+}
+
+// final confirmation returns true or false
+export async function getFinalConfirmation() {
+  const answer = await getAnswer(`
+        Are you sure? 
+        1. No
+        2. Yes
+        `);
+  if (answer !== 1 && answer !== 2) {
+    console.log(`
+            Action Cancelled: Please choose 1 or 2
+            `);
+    return;
+  }
+  const lookup = {
+    1: false,
+    2: true,
+  };
+  return lookup[answer];
 }

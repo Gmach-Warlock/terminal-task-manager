@@ -52,5 +52,3 @@ const arr1 = [
   { id: 4, complete: true, priority: "low" },
   { id: 5, complete: false, priority: "high" },
 ];
-
-console.log(taskFilterByPriority(arr1, "low"));

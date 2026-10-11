@@ -55,5 +55,3 @@ export async function mainMenu() {
   const answer = await getNumericInput("Choose an option: ");
   returnAppropriateAction(answer);
 }
-
-mainMenu();

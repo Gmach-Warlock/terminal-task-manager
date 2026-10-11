@@ -1,54 +1,74 @@
-import { getAnswer, getStringInput } from "./terminal.js";
+import { isCleanString } from "../tasks/taskValidator.js";
+import { getNumericInput, getStringInput } from "./terminal.js";
 
 // get title for edit or mark
-export async function getTitle(type) {
-  if (type !== "add" && type !== "edit" && type !== "delete") return;
+export async function getTaskTitle(type) {
+  if (
+    type !== "add" &&
+    type !== "edit" &&
+    type !== "delete" &&
+    type !== "complete" &&
+    type !== "incomplete"
+  )
+    return;
   const lookup = {
     add: "Please give a title to your new task: ",
     edit: "What is the title of the task to edit? ",
     delete: "What is the title of the task to delete? ",
+    complete: "What is the title of the task to mark complete? ",
+    incomplete: "What is the title of the task to mark incomplete? ",
   };
   const title = await getStringInput(lookup[type]);
   return title;
 }
 
-// get edit task info
-export async function getPropToModify() {
-  const num = await getNumericInput(
+export async function getTaskDescription(newTask = true) {
+  const lookup = {
+    new: "Please give a brief description to your new task: ",
+    edit: "Please give a new description to your task: ",
+  };
+  const type = newTask ? "new" : "edit";
+  const description = getStringInput(lookup[type]);
+  return description;
+}
+
+export function getTaskPriority(newTask = true) {
+  const lookup = {
+    new: `Is this new task a low, medium, or high priority?`,
+    edit: `Is the new priority low, medium, or high? `,
+  };
+  const type = newTask ? "new" : "edit";
+  const priority = getNumericInput(
     `
-    Please choose a property to modify: 
-    1. Title
-    2. Description
-    3. Priority
-    
-    Please enter the appropriate number: 
+    ${lookup[type]}
+    1. Low
+    2. Medium
+    3. High
+
+    Please choose the appropriate value: 
     `,
     3,
   );
-  const lookup = {
-    1: "title",
-    2: "description",
-    3: "priority",
-  };
-  return lookup[num];
+  return priority;
 }
 
-// final confirmation returns true or false
-export async function getFinalConfirmation() {
-  const answer = await getAnswer(`
-        Are you sure? 
-        1. No
-        2. Yes
-        `);
-  if (answer !== 1 && answer !== 2) {
-    console.log(`
-            Action Cancelled: Please choose 1 or 2
-            `);
-    return;
-  }
-  const lookup = {
-    1: false,
-    2: true,
-  };
-  return lookup[answer];
+export async function getAddInfo() {
+  const title = await getTaskTitle("add");
+  const description = await getTaskDescription();
+  const priority = await getTaskPriority();
+  return { title, description, priority };
+}
+
+export async function getDeleteTitle() {
+  const title = await getTaskTitle("delete");
+  if (!isCleanString(title)) return;
+  return title;
+}
+
+export async function getMarkTitle(complete = true) {
+  const title = complete
+    ? await getTaskTitle("complete")
+    : await getTaskTitle("incomplete");
+  if (!isCleanString(title)) return;
+  return title;
 }
