@@ -53,7 +53,6 @@ export function logTasks(arr, type) {
 export async function mainMenu() {
   displayMenu();
   const answer = await getNumericInput("Choose an option: ");
-  console.log(await answer);
   returnAppropriateAction(answer);
 }
 
