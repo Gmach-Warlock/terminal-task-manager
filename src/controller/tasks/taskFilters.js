@@ -1,5 +1,5 @@
 import { taskStore } from "../../model/taskStore.js";
-import { logTasks } from "../../view/menu.js";
+import { logTasks, mainMenu } from "../../view/menu.js";
 import { getFilterInfo } from "../terminal/filterPrompts.js";
 
 function makeFilterArrayByStatus(status) {
@@ -17,6 +17,7 @@ function makeFilterArrayByStatus(status) {
 export function taskFilterByStatus(status) {
   const newArray = makeFilterArrayByStatus(status);
   logTasks(newArray, "filter");
+  mainMenu();
 }
 
 function makeFilterArrayByPriority(priority) {
@@ -30,6 +31,7 @@ function makeFilterArrayByPriority(priority) {
 export function taskFilterByPriority(priority) {
   const newArray = makeFilterArrayByPriority(priority);
   (logTasks(newArray), "priority");
+  mainMenu();
 }
 
 export async function filterTaskInStore() {
@@ -44,11 +46,3 @@ export async function filterTaskInStore() {
   };
   return lookup[type];
 }
-
-const arr1 = [
-  { id: 1, complete: false, priority: "low" },
-  { id: 2, complete: true, priority: "medium" },
-  { id: 3, complete: false, priority: "high" },
-  { id: 4, complete: true, priority: "low" },
-  { id: 5, complete: false, priority: "high" },
-];

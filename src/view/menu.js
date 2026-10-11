@@ -40,14 +40,18 @@ export function logTasks(arr, type) {
   console.log(lookup[type]);
   arr.forEach((item) =>
     console.log(`
-    
+---------------------------------------------
+      
 title: ${item.title}, 
 description: ${item.description},
 priority: ${item.priority},
-isCompleted: ${item.completed}, 
-----------------------------------------------
+isCompleted: ${item.completed},
+createdAt: ${item.createdAt},
     `),
   );
+  console.log(`
+---------------------------------------------
+    `);
 }
 
 export async function mainMenu() {

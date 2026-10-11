@@ -35,12 +35,11 @@ export async function removeTaskFromStore() {
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
   taskStore.setTasks(newArray);
+  mainMenu();
 }
 
 export async function editTaskInStore() {
-  console.log("starting editTaskInStore");
   const lookup = await getEditInfo();
-  console.log(lookup);
   const edittedItem = editItem(
     taskStore.tasks,
     lookup.title,
@@ -53,13 +52,12 @@ export async function editTaskInStore() {
 }
 
 async function markTaskInStore(completed = true) {
-  const title = getMarkTitle();
-  console.log(title);
-  const newArray = completed
-    ? editItem(taskStore.tasks, title, "completed", true)
-    : editItem(taskStore.tasks, title, "completed", false);
-  console.log(newArray);
-  // taskStore.setTasks(newArray);
+  const title = await getMarkTitle();
+  const markedItem = completed
+    ? await editItem(taskStore.tasks, title, "completed", true)
+    : await editItem(taskStore.tasks, title, "completed", false);
+  const newState = await addItem(taskStore.tasks, markedItem);
+  taskStore.setTasks(newState);
   mainMenu();
 }
 
@@ -71,8 +69,9 @@ export function viewAllTasks() {
 }
 
 function quitTaskApp() {
-  console.log(`Thank you for using the Task App. 
-    Goodbye.`);
+  console.log(`
+Thank you for using the Task App. 
+Goodbye.`);
   taskApp.quitApp();
 }
 

@@ -1,7 +1,8 @@
-import { logTasks } from "../../view/menu.js";
+import { taskStore } from "../../model/taskStore.js";
+import { logTasks, mainMenu } from "../../view/menu.js";
 import { getSearchCriteria } from "../terminal/searchPrompts.js";
 
-function searchArray(term) {
+function searchArray(arr, term) {
   const newArray = arr.filter((task) =>
     task.title.toLowerCase().includes(term),
   );
@@ -15,7 +16,8 @@ function searchArray(term) {
 export async function searchTasksInStore() {
   const term = await getSearchCriteria();
   if (!term) return;
-  const newArray = searchArray(term);
+  const newArray = searchArray(taskStore.tasks, term);
   logTasks(newArray, "search");
   return newArray;
+  mainMenu();
 }
