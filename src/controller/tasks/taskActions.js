@@ -7,6 +7,7 @@ import {
   getTaskPriority,
   getTaskTitle,
 } from "../terminal/infoPrompts.js";
+import { getEditInfo } from "../terminal/editPrompts.js";
 import { searchTasksInStore } from "./taskSearch.js";
 import { addItem, editItem } from "./taskHelpers.js";
 import { mainMenu, logTasks } from "../../view/menu.js";
@@ -38,22 +39,25 @@ export async function removeTaskFromStore() {
 
 export async function editTaskInStore() {
   const lookup = await getEditInfo();
-  const newArray = editItem(
+  const edittedItem = editItem(
     taskStore.tasks,
     lookup.title,
     lookup.prop,
     lookup.newValue,
   );
-  taskStore.setTasks(newArray);
+  const newState = await addItem(taskStore.tasks, edittedItem);
+  taskStore.setTasks(newState);
   mainMenu();
 }
 
 async function markTaskInStore(completed = true) {
   const title = getMarkTitle();
+  console.log(title);
   const newArray = completed
     ? editItem(taskStore.tasks, title, "completed", true)
     : editItem(taskStore.tasks, title, "completed", false);
-  taskStore.setTasks(newArray);
+  console.log(newArray);
+  // taskStore.setTasks(newArray);
   mainMenu();
 }
 

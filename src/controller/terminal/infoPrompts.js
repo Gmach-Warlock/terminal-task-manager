@@ -19,6 +19,7 @@ export async function getTaskTitle(type) {
     incomplete: "What is the title of the task to mark incomplete? ",
   };
   const title = await getStringInput(lookup[type]);
+  console.log(title);
   return title;
 }
 
@@ -69,6 +70,7 @@ export async function getMarkTitle(complete = true) {
   const title = complete
     ? await getTaskTitle("complete")
     : await getTaskTitle("incomplete");
+  console.log(title);
   if (!isCleanString(title)) return;
   return title;
 }

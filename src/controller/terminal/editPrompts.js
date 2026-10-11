@@ -1,3 +1,9 @@
+import {
+  getTaskTitle,
+  getTaskDescription,
+  getTaskPriority,
+} from "./infoPrompts.js";
+import { getNumericInput } from "./terminal.js";
 // get edit task info
 export async function getTaskPropToModify() {
   const num = await getNumericInput(
@@ -20,6 +26,7 @@ export async function getTaskPropToModify() {
 }
 
 export async function getEditInfo() {
+  console.log("in edit info");
   const title = await getTaskTitle("edit");
   const prop = await getTaskPropToModify();
   const lookup = {
