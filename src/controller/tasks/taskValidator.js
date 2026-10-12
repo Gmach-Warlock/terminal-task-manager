@@ -1,3 +1,5 @@
+import { mainMenu } from "../../view/menu.js";
+
 export function isCleanString(str) {
   if (typeof str !== "string") return false;
   const htmlRegex = /<[^>]*>/;
@@ -22,7 +24,16 @@ export function isValidIndex(arr, id) {
 // makes sure number is in range, then converts to string for lookup
 export function checkAndConvertNum(number, min = 1, max = 10) {
   let numVal = Number(number);
-  if (numVal > max || numVal < min) return;
+  if (Number.isNaN(numVal)) {
+    console.log(
+      "Please enter the appropriate value. Strings are not accepted. ",
+    );
+    return;
+  }
+  if (numVal > max || numVal < min) {
+    console.log(`Please enter a valid number based on the options. `);
+    return;
+  }
   let stringVal = String(numVal);
   return stringVal;
 }

@@ -15,10 +15,9 @@ function makeFilterArrayByStatus(status) {
   return newArray;
 }
 
-export function taskFilterByStatus(status) {
+function taskFilterByStatus(status) {
   const newArray = makeFilterArrayByStatus(status);
   logTasks(newArray, "filter");
-  mainMenu();
 }
 
 function makeFilterArrayByPriority(priority) {
@@ -31,10 +30,9 @@ function makeFilterArrayByPriority(priority) {
   return newArray;
 }
 
-export function taskFilterByPriority(priority) {
+function taskFilterByPriority(priority) {
   const newArray = makeFilterArrayByPriority(priority);
   (logTasks(newArray), "priority");
-  mainMenu();
 }
 
 export async function filterTaskInStore() {

@@ -10,26 +10,28 @@ export function sortItems(arr, category) {
   };
   const lookup = {
     newest: () =>
-      [...arr].sort((a, b) => new Date(b.createAt) - new Date(a.createAt)),
+      [...arr].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
     oldest: () =>
-      [...arr].sort((a, b) => new Date(a.createAt) - new Date(b.createAt)),
+      [...arr].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)),
     high: () =>
       [...arr].sort(
-        (a, b) => priorityRank[b.priority] - priorityRank[a.priority],
+        (a, b) =>
+          priorityRank[b.priority?.toLowerCase()] -
+          priorityRank[a.priority?.toLowerCase()],
       ),
     low: () =>
       [...arr].sort(
-        (a, b) => priorityRank[a.priority] - priorityRank[b.priority],
+        (a, b) =>
+          priorityRank[a.priority?.toLowerCase()] -
+          priorityRank[b.priority?.toLowerCase()],
       ),
   };
-  const newArray = lookup[category];
+  const newArray = lookup[category]();
   return newArray;
 }
 
 export async function sortItemsInStore() {
-  console.log(`sort items in store`);
   const criteria = await getSortCriteria();
   const newArray = sortItems(taskStore.tasks, criteria);
   taskStore.setTasks(newArray);
-  mainMenu();
 }

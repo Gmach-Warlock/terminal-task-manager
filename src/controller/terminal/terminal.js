@@ -28,9 +28,9 @@ async function getAnswer(question) {
 export async function getNumericInput(message, numOfOptions) {
   let hasAnswer = false;
   let answer = await getAnswer(message);
+
   while (!hasAnswer) {
     if (!checkAndConvertNum(answer, 1, numOfOptions)) {
-      console.log(`Please enter a valid number!`);
       answer = await getAnswer(message);
     }
     if (checkAndConvertNum(answer, 1, numOfOptions)) hasAnswer = true;

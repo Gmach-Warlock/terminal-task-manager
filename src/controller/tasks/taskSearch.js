@@ -18,5 +18,4 @@ export async function searchTasksInStore() {
   if (!term) return;
   const newArray = searchArray(taskStore.tasks, term);
   logTasks(newArray, "search");
-  mainMenu();
 }

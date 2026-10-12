@@ -34,7 +34,7 @@ export function logTasks(arr, type) {
     type !== "all" &&
     type !== "filter" &&
     type !== "search" &&
-    type !== "search"
+    type !== "sort"
   )
     return;
   console.log(lookup[type]);

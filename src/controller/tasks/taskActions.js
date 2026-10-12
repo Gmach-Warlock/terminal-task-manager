@@ -10,10 +10,11 @@ import {
 import { getEditInfo } from "../terminal/editPrompts.js";
 import { searchTasksInStore } from "./taskSearch.js";
 import { addItem, editItem } from "./taskHelpers.js";
-import { mainMenu, logTasks } from "../../view/menu.js";
+import { logTasks } from "../../view/menu.js";
 import { taskApp } from "../../model/TaskApp.js";
 import { taskTotals } from "../../model/TaskTotals.js";
 import { sortItemsInStore } from "./taskSorters.js";
+import { checkAndConvertNum } from "./taskValidator.js";
 
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
@@ -24,7 +25,6 @@ export async function addTaskToStore() {
   const newState = await addItem(taskStore.tasks, task);
   taskTotals.addTaskTotals();
   taskStore.setTasks(newState);
-  mainMenu();
 }
 
 export async function removeTaskFromStore() {
@@ -36,7 +36,6 @@ export async function removeTaskFromStore() {
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
   taskStore.setTasks(newArray);
-  mainMenu();
 }
 
 export async function editTaskInStore() {
@@ -49,7 +48,6 @@ export async function editTaskInStore() {
   );
   const newState = await addItem(taskStore.tasks, edittedItem);
   taskStore.setTasks(newState);
-  mainMenu();
 }
 
 async function markTaskInStore(completed = true) {
@@ -58,15 +56,14 @@ async function markTaskInStore(completed = true) {
     ? await editItem(taskStore.tasks, title, "completed", true)
     : await editItem(taskStore.tasks, title, "completed", false);
   const newState = await addItem(taskStore.tasks, markedItem);
-  taskStore.setTasks(newState);
-  mainMenu();
+  console.log(newState);
+  if (newState) taskStore.setTasks(newState);
 }
 
 export function viewAllTasks() {
   console.clear();
   console.log(`Here are your tasks: `);
   logTasks(taskStore.tasks, "all");
-  mainMenu();
 }
 
 function quitTaskApp() {
@@ -78,7 +75,8 @@ Goodbye.`);
 
 // returns appropriate action sequence based on input
 export function returnAppropriateAction(value) {
-  const string = String(value);
+  console.log(value);
+  const string = checkAndConvertNum(value);
   const lookup = {
     1: () => addTaskToStore(),
     2: () => viewAllTasks(),
@@ -91,5 +89,5 @@ export function returnAppropriateAction(value) {
     9: () => filterTaskInStore(),
     10: () => quitTaskApp(),
   };
-  return lookup[string]();
+  if (lookup[string]) return lookup[string]();
 }
