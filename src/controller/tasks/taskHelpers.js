@@ -25,22 +25,10 @@ export function editItem(arr, title, prop, newValue) {
     return;
   }
   itemToEdit[prop] = newValue;
-  console.log(itemToEdit);
   return itemToEdit;
 }
 
 export function filterByCategory(arr, category, value) {
   const newArray = arr.filter((item) => item[category] === value);
-  return newArray;
-}
-
-export function sortItems(arr, category) {
-  const lookup = {
-    newest: () =>
-      [...arr].sort((a, b) => new Date(b.createAt) - new Date(a.createAt)),
-    oldest: () =>
-      [...arr].sort((a, b) => new Date(a.createAt) - new Date(b.createAt)),
-  };
-  const newArray = lookup[category];
   return newArray;
 }

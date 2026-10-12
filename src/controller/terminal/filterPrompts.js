@@ -3,14 +3,16 @@ import { getNumericInput } from "./terminal.js";
 export async function getFilterInfo() {
   const numInput = await getNumericInput(
     `
-    Please choose a filter criteria: 
-    1. Completed
-    2. Not Completed
-    3. Low Priority
-    4. Medium Priority
-    5. High Priority
-    6. All
-    `,
+Please choose a filter criteria: 
+1. Completed
+2. Not Completed
+3. Low Priority
+4. Medium Priority
+5. High Priority
+6. All
+
+Please choose the appropriate value: 
+`,
     6,
   );
   const lookup = {

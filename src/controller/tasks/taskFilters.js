@@ -7,8 +7,9 @@ function makeFilterArrayByStatus(status) {
     return;
   const lookup = {
     all: () => taskStore.tasks.map((item) => item),
-    complete: () => taskStore.tasks.filter((item) => item.complete === true),
-    incomplete: () => taskStore.tasks.filter((item) => item.complete === false),
+    complete: () => taskStore.tasks.filter((item) => item.completed === true),
+    incomplete: () =>
+      taskStore.tasks.filter((item) => item.completed === false),
   };
   const newArray = lookup[status]();
   return newArray;
@@ -23,7 +24,9 @@ export function taskFilterByStatus(status) {
 function makeFilterArrayByPriority(priority) {
   if (priority !== "low" && priority !== "medium" && priority !== "high")
     return;
-  const newArray = taskStore.tasks.filter((item) => item.priority === priority);
+  const newArray = taskStore.tasks.filter(
+    (item) => item.priority.toLowerCase() === priority,
+  );
   logTasks(newArray, "filter");
   return newArray;
 }
@@ -37,12 +40,12 @@ export function taskFilterByPriority(priority) {
 export async function filterTaskInStore() {
   const type = await getFilterInfo();
   const lookup = {
-    1: () => taskFilterByStatus("complete"),
-    2: () => taskFilterByStatus("incomplete"),
-    3: () => taskFilterByPriority("low"),
-    4: () => taskFilterByPriority("medium"),
-    5: () => taskFilterByPriority("high"),
-    6: () => logTasks(taskStore.tasks, "all"),
+    completed: () => taskFilterByStatus("complete"),
+    notCompleted: () => taskFilterByStatus("incomplete"),
+    low: () => taskFilterByPriority("low"),
+    medium: () => taskFilterByPriority("medium"),
+    high: () => taskFilterByPriority("high"),
+    all: () => logTasks(taskStore.tasks, "all"),
   };
-  return lookup[type];
+  return lookup[type]();
 }

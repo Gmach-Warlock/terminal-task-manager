@@ -13,6 +13,7 @@ import { addItem, editItem } from "./taskHelpers.js";
 import { mainMenu, logTasks } from "../../view/menu.js";
 import { taskApp } from "../../model/TaskApp.js";
 import { taskTotals } from "../../model/TaskTotals.js";
+import { sortItemsInStore } from "./taskSorters.js";
 
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
@@ -86,7 +87,7 @@ export function returnAppropriateAction(value) {
     5: () => editTaskInStore(),
     6: () => removeTaskFromStore(),
     7: () => searchTasksInStore(),
-    8: () => console.log("sort standby"),
+    8: () => sortItemsInStore(),
     9: () => filterTaskInStore(),
     10: () => quitTaskApp(),
   };
