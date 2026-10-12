@@ -14,7 +14,7 @@ import { logTasks } from "../../view/menu.js";
 import { taskApp } from "../../model/TaskApp.js";
 import { taskTotals } from "../../model/TaskTotals.js";
 import { sortItemsInStore } from "./taskSorters.js";
-import { checkAndConvertNum } from "./taskValidator.js";
+import { cleanNumericInput } from "./taskValidator.js";
 
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
@@ -76,7 +76,7 @@ Goodbye.`);
 // returns appropriate action sequence based on input
 export function returnAppropriateAction(value) {
   console.log(value);
-  const string = checkAndConvertNum(value);
+  const string = cleanNumericInput(value);
   const lookup = {
     1: () => addTaskToStore(),
     2: () => viewAllTasks(),

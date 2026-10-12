@@ -1,10 +1,24 @@
-import { mainMenu } from "../../view/menu.js";
-
 export function isCleanString(str) {
-  if (typeof str !== "string") return false;
   const htmlRegex = /<[^>]*>/;
   // This regex.test returns true if there is an html tag in the string
-  if (htmlRegex.test(str)) return false;
+  if (htmlRegex.test(str)) {
+    console.log("No HTML allowed!");
+    return false;
+  }
+  if (str === "") {
+    console.log("Please enter something in the field");
+    return false;
+  }
+  // Guard against numeric values in string fields
+  if (!Number.isNaN(str)) {
+    console.log("Please enter a string, not a number ");
+    return false;
+  }
+  if (typeof str !== "string") {
+    console.log("Please use strings, not booleans or other data types.");
+    return false;
+  }
+
   return true;
 }
 export function isValidPriority(string) {
@@ -21,17 +35,27 @@ export function isValidIndex(arr, id) {
   }
   return true;
 }
-// makes sure number is in range, then converts to string for lookup
-export function checkAndConvertNum(number, min = 1, max = 10) {
+
+export function isValidNumber(number) {
   let numVal = Number(number);
+  // checks for strings in numeric fields
   if (Number.isNaN(numVal)) {
     console.log(
       "Please enter the appropriate value. Strings are not accepted. ",
     );
+    return false;
+  }
+  return true;
+}
+// makes sure number is in range, then converts to string for lookup
+export function cleanNumericInput(number, min = 1, max = 10) {
+  if (isValidNumber(number)) {
     return;
   }
   if (numVal > max || numVal < min) {
-    console.log(`Please enter a valid number based on the options. `);
+    console.log(
+      `Please enter the appropriate value. The value given was out of range. `,
+    );
     return;
   }
   let stringVal = String(numVal);

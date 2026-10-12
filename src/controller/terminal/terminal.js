@@ -1,7 +1,7 @@
 import readline from "readline";
 import {
   isCleanString,
-  checkAndConvertNum,
+  cleanNumericInput,
 } from "../../controller/tasks/taskValidator.js";
 
 // creates the readline interface
@@ -27,24 +27,26 @@ async function getAnswer(question) {
 
 export async function getNumericInput(message, numOfOptions) {
   let hasAnswer = false;
-  let answer = await getAnswer(message);
+  let answer;
 
   while (!hasAnswer) {
-    if (!checkAndConvertNum(answer, 1, numOfOptions)) {
-      answer = await getAnswer(message);
+    answer = await getAnswer(message);
+    if (answer === "") {
+      console.log("Please enter the appropriate value: ");
+      continue;
     }
-    if (checkAndConvertNum(answer, 1, numOfOptions)) hasAnswer = true;
+    if (cleanNumericInput(answer, 1, numOfOptions)) hasAnswer = true;
   }
   return answer;
 }
 
 export async function getStringInput(message) {
   let hasAnswer = false;
-  let answer = await getAnswer(message);
+  let answer;
   while (!hasAnswer) {
+    answer = await getAnswer(message);
     if (!isCleanString(answer)) {
-      console.log(`No numbers please.`);
-      answer = await getAnswer(message);
+      continue;
     }
     if (isCleanString(answer)) hasAnswer = true;
   }

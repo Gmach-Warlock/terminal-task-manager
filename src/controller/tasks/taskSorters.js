@@ -1,5 +1,4 @@
 import { taskStore } from "../../model/taskStore.js";
-import { mainMenu } from "../../view/menu.js";
 import { getSortCriteria } from "../terminal/sortPrompts.js";
 
 export function sortItems(arr, category) {

@@ -1,5 +1,5 @@
 import { taskStore } from "../../model/taskStore.js";
-import { logTasks, mainMenu } from "../../view/menu.js";
+import { logTasks } from "../../view/menu.js";
 import { getSearchCriteria } from "../terminal/searchPrompts.js";
 
 function searchArray(arr, term) {
