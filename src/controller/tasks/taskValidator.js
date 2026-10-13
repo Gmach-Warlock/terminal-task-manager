@@ -10,7 +10,7 @@ export function isCleanString(str) {
     return false;
   }
   // Guard against numeric values in string fields
-  if (!Number.isNaN(str)) {
+  if (!isNaN(str)) {
     console.log("Please enter a string, not a number ");
     return false;
   }
@@ -49,16 +49,16 @@ export function isValidNumber(number) {
 }
 // makes sure number is in range, then converts to string for lookup
 export function cleanNumericInput(number, min = 1, max = 10) {
-  if (isValidNumber(number)) {
+  if (!isValidNumber(number)) {
     return;
   }
-  if (numVal > max || numVal < min) {
+  if (number > max || number < min) {
     console.log(
       `Please enter the appropriate value. The value given was out of range. `,
     );
     return;
   }
-  let stringVal = String(numVal);
+  let stringVal = String(number);
   return stringVal;
 }
 

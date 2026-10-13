@@ -1,5 +1,7 @@
 import { returnAppropriateAction } from "../controller/tasks/taskActions.js";
 import { getNumericInput } from "../controller/terminal/terminal.js";
+import { taskCompletes } from "../model/TaskCompletes.js";
+import { taskTotals } from "../model/TaskTotals.js";
 
 // displays the main menu prompt
 export function displayMenu() {
@@ -37,6 +39,7 @@ export function logTasks(arr, type) {
     type !== "sort"
   )
     return;
+
   console.log(lookup[type]);
   arr.forEach((item) =>
     console.log(`
@@ -51,6 +54,16 @@ createdAt: ${item.createdAt},
   );
   console.log(`
 ---------------------------------------------
+    `);
+}
+
+export function logStats() {
+  console.log(`
+Total: ${taskTotals.total},
+Completed tasks: ${taskCompletes.completeTasks},
+Incomplete tasks: ${taskCompletes.incompleteTasks},
+
+==============================================
     `);
 }
 

@@ -37,6 +37,7 @@ export async function getNumericInput(message, numOfOptions) {
     }
     if (cleanNumericInput(answer, 1, numOfOptions)) hasAnswer = true;
   }
+
   return answer;
 }
 
