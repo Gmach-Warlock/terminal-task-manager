@@ -2,14 +2,13 @@ import { mainMenu } from "../../view/menu.js";
 
 export function addItem(arr, itm) {
   if (!arr || !itm) {
-    console.log("Invalid item provided");
     return;
   }
   const exists = arr.some(
     (existing) => existing && existing.title === itm.title,
   );
   if (exists) {
-    const newArray = map((existing) => {
+    const newArray = [...arr].map((existing) => {
       return existing.title === itm.title ? itm : existing;
     });
     return newArray;
@@ -28,7 +27,6 @@ export function editItem(arr, title, prop, newValue) {
   const itemToEdit = newArray.find((item) => item._title === title);
   if (!itemToEdit) {
     console.log("Item with that term in title does not exist");
-    mainMenu();
     return;
   }
   itemToEdit[prop] = newValue;

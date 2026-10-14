@@ -1,5 +1,5 @@
 import { taskStore } from "../../model/taskStore.js";
-import { logTasks } from "../../view/menu.js";
+import { logTasks, mainMenu } from "../../view/menu.js";
 import { getFilterInfo } from "../terminal/filterPrompts.js";
 
 function makeFilterArrayByStatus(status) {
@@ -45,5 +45,7 @@ export async function filterTaskInStore() {
     high: () => taskFilterByPriority("high"),
     all: () => logTasks(taskStore.tasks, "all"),
   };
-  return lookup[type]();
+  lookup[type]();
+
+  mainMenu();
 }
