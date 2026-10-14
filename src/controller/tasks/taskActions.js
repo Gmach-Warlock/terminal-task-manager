@@ -10,7 +10,7 @@ import {
 import { getEditInfo } from "../terminal/editPrompts.js";
 import { searchTasksInStore } from "./taskSearch.js";
 import { addItem, editItem } from "./taskHelpers.js";
-import { logTasks } from "../../view/menu.js";
+import { logTasks, mainMenu } from "../../view/menu.js";
 import { taskApp } from "../../model/TaskApp.js";
 import { taskTotals } from "../../model/TaskTotals.js";
 import { sortItemsInStore } from "./taskSorters.js";
@@ -46,8 +46,9 @@ export async function editTaskInStore() {
     lookup.prop,
     lookup.newValue,
   );
-  const newState = await addItem(taskStore.tasks, edittedItem);
-  taskStore.setTasks(newState);
+  const newState = addItem(taskStore.tasks, edittedItem);
+  if (newState) taskStore.setTasks(newState);
+  if (!newState) mainMenu();
 }
 
 async function markTaskInStore(completed = true) {
@@ -55,15 +56,16 @@ async function markTaskInStore(completed = true) {
   const markedItem = completed
     ? await editItem(taskStore.tasks, title, "completed", true)
     : await editItem(taskStore.tasks, title, "completed", false);
-  const newState = await addItem(taskStore.tasks, markedItem);
-  console.log(newState);
+  const newState = addItem(taskStore.tasks, markedItem);
   if (newState) taskStore.setTasks(newState);
+  if (!newState) mainMenu();
 }
 
 export function viewAllTasks() {
   console.clear();
   console.log(`Here are your tasks: `);
   logTasks(taskStore.tasks, "all");
+  mainMenu();
 }
 
 function quitTaskApp() {

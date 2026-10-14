@@ -9,7 +9,7 @@ export function addItem(arr, itm) {
     (existing) => existing && existing.title === itm.title,
   );
   if (exists) {
-    const newArray = map((existing) => {
+    const newArray = [...arr].map((existing) => {
       return existing.title === itm.title ? itm : existing;
     });
     return newArray;
