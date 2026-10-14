@@ -27,14 +27,6 @@ export function isValidPriority(string) {
     return false;
   return true;
 }
-export function isValidIndex(arr, id) {
-  const index = arr.findIndex((item) => item.id === id);
-  if (index === -1) {
-    console.log(`Index not found!`);
-    return false;
-  }
-  return true;
-}
 
 export function isValidNumber(number) {
   let numVal = Number(number);
@@ -62,7 +54,7 @@ export function cleanNumericInput(number, min = 1, max = 10) {
   return stringVal;
 }
 
-export function taskValidator(task) {
+/* export function taskValidator(task) {
   if (!task.description || !task.title || !task.priority) return false;
   if (
     !isCleanString(task.description) ||
@@ -73,3 +65,4 @@ export function taskValidator(task) {
 
   return true;
 }
+ */

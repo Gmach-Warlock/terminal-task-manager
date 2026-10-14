@@ -22,7 +22,7 @@ export async function addTaskToStore() {
   const priority = await getTaskPriority();
   const task = new Task(title, description, priority);
   console.clear();
-  const newState = await addItem(taskStore.tasks, task);
+  const newState = addItem(taskStore.tasks, task);
   taskTotals.addTaskTotals();
   taskStore.setTasks(newState);
 }

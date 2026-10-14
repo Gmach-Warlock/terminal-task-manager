@@ -27,6 +27,7 @@ export function editItem(arr, title, prop, newValue) {
   const itemToEdit = newArray.find((item) => item._title === title);
   if (!itemToEdit) {
     console.log("Item with that term in title does not exist");
+    mainMenu();
     return;
   }
   itemToEdit[prop] = newValue;
