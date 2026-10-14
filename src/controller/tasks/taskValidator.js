@@ -46,6 +46,18 @@ export function isValidCategory(category) {
   return true;
 }
 
+export function isValidSortType(type) {
+  if (!type) return false;
+  if (
+    type !== "newest" &&
+    type !== "oldest" &&
+    type !== "low" &&
+    type !== "high"
+  )
+    return false;
+  return true;
+}
+
 // makes sure number is in range, then converts to string for lookup
 export function cleanNumericInput(number, min = 1, max = 10) {
   if (!isValidNumber(number)) {
