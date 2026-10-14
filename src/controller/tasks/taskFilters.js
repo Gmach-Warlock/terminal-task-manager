@@ -1,6 +1,7 @@
 import { taskStore } from "../../model/taskStore.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { getFilterInfo } from "../terminal/filterPrompts.js";
+import { isValidPriority } from "./taskValidator.js";
 
 function makeFilterArrayByStatus(status) {
   if (status !== "complete" && status !== "incomplete" && status !== "all")
@@ -21,8 +22,7 @@ function taskFilterByStatus(status) {
 }
 
 function makeFilterArrayByPriority(priority) {
-  if (priority !== "low" && priority !== "medium" && priority !== "high")
-    return;
+  if (!isValidPriority(priority)) return;
   const newArray = taskStore.tasks.filter(
     (item) => item.priority.toLowerCase() === priority,
   );

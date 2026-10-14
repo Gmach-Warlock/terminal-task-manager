@@ -39,6 +39,13 @@ export function isValidNumber(number) {
   }
   return true;
 }
+
+export function isValidCategory(category) {
+  if (!category) return false;
+  if (category !== "completed" && category !== "priority") return false;
+  return true;
+}
+
 // makes sure number is in range, then converts to string for lookup
 export function cleanNumericInput(number, min = 1, max = 10) {
   if (!isValidNumber(number)) {
@@ -54,7 +61,7 @@ export function cleanNumericInput(number, min = 1, max = 10) {
   return stringVal;
 }
 
-/* export function taskValidator(task) {
+export function taskValidator(task) {
   if (!task.description || !task.title || !task.priority) return false;
   if (
     !isCleanString(task.description) ||
@@ -65,4 +72,3 @@ export function cleanNumericInput(number, min = 1, max = 10) {
 
   return true;
 }
- */

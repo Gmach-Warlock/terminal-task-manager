@@ -15,7 +15,6 @@ import { taskApp } from "../../model/TaskApp.js";
 import { taskTotals } from "../../model/TaskTotals.js";
 import { sortItemsInStore } from "./taskSorters.js";
 import { cleanNumericInput } from "./taskValidator.js";
-
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
   const description = await getTaskDescription();

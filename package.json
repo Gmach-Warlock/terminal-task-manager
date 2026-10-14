@@ -4,6 +4,7 @@
   "description": "1. Clone the repo using git clone <web address here>\r 2. cd into the project folder.\r 3. run node app.js",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "node --test \"**/__tests__/**/*.test.js\""
   },
   "repository": {
