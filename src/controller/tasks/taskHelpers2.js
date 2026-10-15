@@ -1,8 +1,4 @@
-import {
-  isValidCategory,
-  isValidStatus,
-  isValidPriority,
-} from "./taskValidator.js";
+import { isValidStatus, isValidPriority } from "./taskValidator.js";
 import { taskStore } from "../../model/taskStore.js";
 
 export function makeFilterArrayByStatus(status) {
