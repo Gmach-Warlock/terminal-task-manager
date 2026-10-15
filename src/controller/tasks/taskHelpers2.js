@@ -5,13 +5,6 @@ import {
 } from "./taskValidator.js";
 import { taskStore } from "../../model/taskStore.js";
 
-export function filterByCategory(arr, category, value) {
-  if (!arr || !category || !value) return;
-  if (!Array.isArray(arr) || !isValidCategory(category)) return;
-  const newArray = arr.filter((item) => item[category] === value);
-  return newArray;
-}
-
 export function makeFilterArrayByStatus(status) {
   if (!isValidStatus(status)) return;
   const lookup = {

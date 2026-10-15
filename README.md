@@ -4,7 +4,7 @@
 
 1. Clone the repo using git clone <web address here>
 2. cd into the project folder.
-3. run node app.js
+3. run npm run start, or node app.js to run the program.
 
 ## A menu should appear and prompt for a numeric response between 1 and 10.
 
@@ -23,3 +23,9 @@
 - A strategy pattern is used to determine which action is used based on the numeric response received. There is also another smaller use of the pattern in the filterTaskInStore method as well.
 - The observer pattern is used in TaskStore to log the tasks every time that the array is touched. There is a conditional which prevents the log on initial startup. It is based on the total number of tasks made, so it won't start until a task has been added.
 - Pure functions are used to help with cleaning and sanitizing inputs, and also with the CRUD actions, sort, search, and filter functions. Store helpers use a combination of the spread operator and the built in non-mutable array methods to create shallow copies, which is used to replace the state in the store with that new state (future goal is to use this with a dually linked list to manage state for the ability to undo).
+
+## Bonus Features
+
+- Input validation logic at every corner to make sure input from the user is of proper type and form. Most of the time spent on this project has been on the guard logic of the validator helpers. Figuring out why guards are not behaving as expected has been very tricky. There are many quirks in the language which make this step challenging.
+- Unit tests for each of the pure unmutating functions using the node:test suite. Tests themselves do not completely rid a program of bugs, but they do help to keep the behavior predictable. Much struggle occured here as well.
+- Basic stats for size, and total implemented
