@@ -1,18 +1,20 @@
 import { taskStore } from "../../model/taskStore.js";
 import { Task } from "../../model/Task.js";
-import { filterTaskInStore } from "./taskFilters.js";
+import { taskTotals } from "../../model/TaskTotals.js";
+import { taskApp } from "../../model/TaskApp.js";
 import {
   getTaskDescription,
   getTaskPriority,
   getTaskTitle,
+  getSearchCriteria,
 } from "../terminal/infoPrompts.js";
 import { getEditInfo } from "../terminal/editPrompts.js";
-import { addItem, editItem } from "./taskHelpers.js";
+import { addItem, editItem, updateStoreArr } from "./taskHelpers.js";
+import { sortItems } from "./taskHelpers3.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
-import { taskApp } from "../../model/TaskApp.js";
-import { taskTotals } from "../../model/TaskTotals.js";
-import { sortItemsInStore } from "./taskSorters.js";
 import { cleanNumericInput } from "./taskValidator.js";
+import { getSortCriteria } from "../terminal/sortPrompts.js";
+import { filterTaskInStore } from "./taskFilters.js";
 
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
@@ -23,7 +25,7 @@ export async function addTaskToStore() {
   if (newState) {
     console.clear();
     taskTotals.addTaskTotals();
-    taskStore.setTasks(newState);
+    updateStoreArr(newState, taskStore, taskStore.setTasks);
   }
   if (!newState) {
     console.log("Failed to add task: validation failed ");
@@ -39,9 +41,9 @@ export async function removeTaskFromStore() {
     mainMenu();
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
-  if (newArray) {
+  if (newArray && task) {
     taskTotals.removeTaskTotals();
-    taskStore.setTasks(newArray);
+    updateStoreArr(newArray, taskStore, taskStore.setTasks);
   }
   if (!newArray) {
     console.log("Failed to remove task: validation failed ");
@@ -58,7 +60,7 @@ export async function editTaskInStore() {
     lookup.newValue,
   );
   const newState = addItem(taskStore.tasks, edittedItem);
-  if (newState) taskStore.setTasks(newState);
+  if (newState) updateStoreArr(newState, taskStore, taskStore.setTasks);
   if (!newState) mainMenu();
 }
 
@@ -70,7 +72,7 @@ async function markTaskInStore(completed = true) {
     ? await editItem(taskStore.tasks, title, "completed", true)
     : await editItem(taskStore.tasks, title, "completed", false);
   const newState = addItem(taskStore.tasks, markedItem);
-  if (newState) taskStore.setTasks(newState);
+  if (newState) updateStoreArr(newState, taskStore, taskStore.setTasks);
   if (!newState) mainMenu();
 }
 
@@ -94,6 +96,12 @@ export async function searchTasksInStore() {
   const newArray = searchArray(taskStore.tasks, term);
   logTasks(newArray, "search");
   mainMenu();
+}
+
+export async function sortItemsInStore() {
+  const criteria = await getSortCriteria();
+  const newArray = sortItems(taskStore.tasks, criteria);
+  if (newArray) updateStoreArr(newArray, taskStore, taskStore.setTasks);
 }
 
 // returns appropriate action sequence based on input

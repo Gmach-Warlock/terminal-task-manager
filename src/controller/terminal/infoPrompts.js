@@ -78,3 +78,9 @@ export async function getMarkTitle(complete = true) {
   if (!isCleanString(title)) return;
   return title;
 }
+
+export async function getSearchCriteria() {
+  const searchTerm = await getStringInput(`What is the term to search for? `);
+  const cleanedTerm = searchTerm.toLowerCase();
+  return cleanedTerm;
+}

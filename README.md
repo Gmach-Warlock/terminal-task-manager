@@ -5,6 +5,7 @@
 1. Clone the repo using git clone <web address here>
 2. cd into the project folder.
 3. run npm run start, or node app.js to run the program.
+4. run npm run test in the main folder to see the tests after you have installed the basic dependencies if you want to see their results
 
 ## A menu should appear and prompt for a numeric response between 1 and 10.
 
@@ -28,4 +29,5 @@
 
 - Input validation logic at every corner to make sure input from the user is of proper type and form. Most of the time spent on this project has been on the guard logic of the validator helpers. Figuring out why guards are not behaving as expected has been very tricky. There are many quirks in the language which make this step challenging.
 - Unit tests for each of the pure unmutating functions using the node:test suite. Tests themselves do not completely rid a program of bugs, but they do help to keep the behavior predictable. Much struggle occured here as well.
+
 - Basic stats for size, and total implemented
