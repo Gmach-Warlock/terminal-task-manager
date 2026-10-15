@@ -2,7 +2,6 @@ import { taskStore } from "../../model/taskStore.js";
 import { Task } from "../../model/Task.js";
 import { filterTaskInStore } from "./taskFilters.js";
 import {
-  getMarkTitle,
   getTaskDescription,
   getTaskPriority,
   getTaskTitle,
@@ -21,18 +20,24 @@ export async function addTaskToStore() {
   const description = await getTaskDescription();
   const priority = await getTaskPriority();
   const task = new Task(title, description, priority);
-  console.clear();
-  const newState = await addItem(taskStore.tasks, task);
-  taskTotals.addTaskTotals();
-  taskStore.setTasks(newState);
+  const newState = addItem(taskStore.tasks, task);
+  if (newState) {
+    console.clear();
+    taskTotals.addTaskTotals();
+    taskStore.setTasks(newState);
+  }
+  if (!newState) {
+    console.log("Failed to add task: validation failed ");
+    return;
+  }
 }
 
 export async function removeTaskFromStore() {
   const title = await getTaskTitle("delete");
   const task = taskStore.tasks.find((task) => task.title === title);
   if (!task) {
-    console.log("Title not found");
-    return;
+    console.log("Title not found, returning to main menu");
+    mainMenu();
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
   taskStore.setTasks(newArray);
@@ -52,7 +57,9 @@ export async function editTaskInStore() {
 }
 
 async function markTaskInStore(completed = true) {
-  const title = await getMarkTitle();
+  const title = completed
+    ? await getTaskTitle("complete")
+    : await getTaskTitle("incomplete");
   const markedItem = completed
     ? await editItem(taskStore.tasks, title, "completed", true)
     : await editItem(taskStore.tasks, title, "completed", false);

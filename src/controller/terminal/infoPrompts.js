@@ -54,6 +54,7 @@ Please choose the appropriate value:
     2: "Medium",
     3: "High",
   };
+  console.log("answers", type, priority);
   return lookup2[priority];
 }
 

@@ -10,7 +10,7 @@ export function isCleanString(str) {
     return false;
   }
   // Guard against numeric values in string fields
-  if (!isNaN(str)) {
+  if (/^\d+$/.test(str)) {
     console.log("Please enter a string, not a number ");
     return false;
   }
@@ -22,17 +22,10 @@ export function isCleanString(str) {
   return true;
 }
 export function isValidPriority(string) {
-  if (!isCleanString) return false;
-  if (string !== "low" && string !== "medium" && string !== "high")
+  if (!isCleanString(string)) return false;
+  const lowerCased = string.toLowerCase();
+  if (lowerCased !== "low" && lowerCased !== "medium" && lowerCased !== "high")
     return false;
-  return true;
-}
-export function isValidIndex(arr, id) {
-  const index = arr.findIndex((item) => item.id === id);
-  if (index === -1) {
-    console.log(`Index not found!`);
-    return false;
-  }
   return true;
 }
 
@@ -47,6 +40,32 @@ export function isValidNumber(number) {
   }
   return true;
 }
+
+export function isValidCategory(category) {
+  if (!category) return false;
+  if (category !== "completed" && category !== "priority") return false;
+  return true;
+}
+
+export function isValidStatus(status) {
+  if (!status) return false;
+  if (status !== "complete" && status !== "incomplete" && status !== "all")
+    return false;
+  return true;
+}
+
+export function isValidSortType(type) {
+  if (!type) return false;
+  if (
+    type !== "newest" &&
+    type !== "oldest" &&
+    type !== "low" &&
+    type !== "high"
+  )
+    return false;
+  return true;
+}
+
 // makes sure number is in range, then converts to string for lookup
 export function cleanNumericInput(number, min = 1, max = 10) {
   if (!isValidNumber(number)) {
@@ -62,12 +81,12 @@ export function cleanNumericInput(number, min = 1, max = 10) {
   return stringVal;
 }
 
-export function taskValidator(task) {
-  if (!task.description || !task.title || !task.priority) return false;
+export function isValidInfo(infoObj) {
+  if (!infoObj.description || !infoObj.title || !infoObj.priority) return false;
   if (
-    !isCleanString(task.description) ||
-    !isCleanString(task.title) ||
-    !isValidPriority(task.priority)
+    !isCleanString(infoObj.description) ||
+    !isCleanString(infoObj.title) ||
+    !isValidPriority(infoObj.priority)
   )
     return false;
 

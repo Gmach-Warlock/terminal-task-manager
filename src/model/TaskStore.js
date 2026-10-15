@@ -1,10 +1,10 @@
 import { logTasks, mainMenu } from "../view/menu.js";
 import { taskTotals } from "./TaskTotals.js";
 
-export function myListener() {
+export function myListener(store = taskStore) {
   if (taskTotals.total > 0) {
     console.log("Tasks have been updated. ");
-    logTasks(taskStore.tasks, "all");
+    logTasks(store.tasks, "all");
     mainMenu();
   }
 }
@@ -21,8 +21,10 @@ export class TaskStore {
   }
 
   notify() {
-    this.listeners.forEach(() => {
-      myListener();
+    this.listeners.forEach((listener) => {
+      if (typeof listener === "function") {
+        listener(this);
+      }
     });
   }
 
@@ -46,4 +48,4 @@ export class TaskStore {
 export const taskStore = TaskStore.getInstance();
 
 // subscribe to the listener for the app
-taskStore.subscribe(myListener());
+taskStore.subscribe(myListener);

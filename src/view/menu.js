@@ -26,6 +26,7 @@ What would you like to do?
 }
 
 export function logTasks(arr, type) {
+  console.log("in log tasks now", arr, type);
   const lookup = {
     all: "Here are all of the tasks: ",
     filter: "Here are the filtered results: ",

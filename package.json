@@ -1,0 +1,22 @@
+{
+  "name": "terminaltaskmanager",
+  "version": "1.0.0",
+  "description": "1. Clone the repo using git clone <web address here>\r 2. cd into the project folder.\r 3. run node app.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node --test \"**/__tests__/**/*.test.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gmach-Warlock/terminal-task-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Gmach-Warlock/terminal-task-manager/issues"
+  },
+  "homepage": "https://github.com/Gmach-Warlock/terminal-task-manager#readme"
+}
