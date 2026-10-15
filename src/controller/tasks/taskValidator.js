@@ -46,6 +46,13 @@ export function isValidCategory(category) {
   return true;
 }
 
+export function isValidStatus(status) {
+  if (!status) return false;
+  if (status !== "complete" && status !== "incomplete" && status !== "all")
+    return false;
+  return true;
+}
+
 export function isValidSortType(type) {
   if (!type) return false;
   if (

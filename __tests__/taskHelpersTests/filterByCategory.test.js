@@ -1,6 +1,6 @@
-import test, { describe, it } from "node:test";
+import { describe, it } from "node:test";
 import assert from "node:assert";
-import { filterByCategory } from "../../src/controller/tasks/taskHelpers.js";
+import { filterByCategory } from "../../src/controller/tasks/taskHelpers2.js";
 
 describe("filterByCategory", () => {
   const testArr = [

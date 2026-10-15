@@ -1,4 +1,4 @@
-/* import { describe, it } from "node:test";
+import { describe, it } from "node:test";
 import assert from "node:assert";
 import { updateStoreArr } from "../../src/controller/tasks/taskHelpers.js";
 
@@ -44,8 +44,7 @@ describe("updateStoreArr", () => {
   });
   it("should update the state of the storeMethod prop on the store with the newArray provided if all of the parameters are good", () => {
     const testStore = createTestStore();
-    const result = updateStoreArr(testArr, testStore, "setTasks");
-    assert.deepStrictEqual(result, testArr);
+    updateStoreArr(testArr, testStore, testStore.setTasks);
+    assert.deepStrictEqual(testStore.tasks, testArr);
   });
 });
- */

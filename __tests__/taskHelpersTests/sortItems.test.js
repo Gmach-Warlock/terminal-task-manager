@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { sortItems } from "../../src/controller/tasks/taskHelpers.js";
+import { sortItems } from "../../src/controller/tasks/taskHelpers3.js";
 
 describe("sortItems", () => {
   const testArr = [
