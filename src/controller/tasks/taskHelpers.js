@@ -42,7 +42,7 @@ export function editItem(arr, title, prop, newValue) {
     (item) => item._title === title || item.title === title,
   );
   if (!itemToEdit) {
-    console.log("Item with that term in title does not exist");
+    // console.log("Item with that term in title does not exist");
     return;
   }
   itemToEdit[prop] = newValue;

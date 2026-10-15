@@ -25,7 +25,11 @@ export function makeFilterArrayByStatus(status) {
 }
 
 export function makeFilterArrayByPriority(priority) {
-  if (!isValidPriority(priority)) return;
+  console.log("in function", priority);
+  if (!isValidPriority(priority)) {
+    console.log("failed make array guard");
+    return;
+  }
   const newArray = taskStore.tasks.filter(
     (item) => item.priority.toLowerCase() === priority,
   );

@@ -13,7 +13,7 @@ function taskFilterByStatus(status) {
 
 function taskFilterByPriority(priority) {
   const newArray = makeFilterArrayByPriority(priority);
-  (logTasks(newArray), "priority");
+  logTasks(newArray, "filter");
 }
 
 export async function filterTaskInStore() {
