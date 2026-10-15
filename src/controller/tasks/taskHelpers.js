@@ -2,13 +2,15 @@ import { isCleanString, isValidPriority } from "./taskValidator.js";
 
 export function addItem(arr, itm) {
   if (!Array.isArray(arr) || !itm || !isValidPriority(itm.priority)) {
-    return;
+    console.log("failed guard 1 in add item");
+    return arr || [];
   }
 
   const index = arr.findIndex(
     (existing) => existing && existing.title === itm.title,
   );
   if (index !== -1) {
+    console.log("index aquired", index);
     const newArray = arr.map((existing) => {
       return existing.title === itm.title ? itm : existing;
     });

@@ -23,7 +23,8 @@ export function isCleanString(str) {
 }
 export function isValidPriority(string) {
   if (!isCleanString) return false;
-  if (string !== "low" && string !== "medium" && string !== "high")
+  const lowerCased = string.toLowerCase();
+  if (lowerCased !== "low" && lowerCased !== "medium" && lowerCased !== "high")
     return false;
   return true;
 }
@@ -80,12 +81,12 @@ export function cleanNumericInput(number, min = 1, max = 10) {
   return stringVal;
 }
 
-export function taskValidator(task) {
-  if (!task.description || !task.title || !task.priority) return false;
+export function isValidInfo(infoObj) {
+  if (!infoObj.description || !infoObj.title || !infoObj.priority) return false;
   if (
-    !isCleanString(task.description) ||
-    !isCleanString(task.title) ||
-    !isValidPriority(task.priority)
+    !isCleanString(infoObj.description) ||
+    !isCleanString(infoObj.title) ||
+    !isValidPriority(infoObj.priority)
   )
     return false;
 

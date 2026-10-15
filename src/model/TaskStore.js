@@ -21,8 +21,10 @@ export class TaskStore {
   }
 
   notify() {
-    this.listeners.forEach(() => {
-      myListener();
+    this.listeners.forEach((listener) => {
+      if (typeof listener === "function") {
+        listener(this);
+      }
     });
   }
 
@@ -46,4 +48,4 @@ export class TaskStore {
 export const taskStore = TaskStore.getInstance();
 
 // subscribe to the listener for the app
-taskStore.subscribe(myListener());
+taskStore.subscribe(myListener);

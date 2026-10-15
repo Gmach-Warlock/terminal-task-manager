@@ -20,10 +20,16 @@ export async function addTaskToStore() {
   const description = await getTaskDescription();
   const priority = await getTaskPriority();
   const task = new Task(title, description, priority);
-  console.clear();
   const newState = addItem(taskStore.tasks, task);
-  taskTotals.addTaskTotals();
-  taskStore.setTasks(newState);
+  if (newState) {
+    console.clear();
+    taskTotals.addTaskTotals();
+    taskStore.setTasks(newState);
+  }
+  if (!newState) {
+    console.log("Failed to add task: validation failed ");
+    return;
+  }
 }
 
 export async function removeTaskFromStore() {
