@@ -1,4 +1,3 @@
-import { type } from "node:os";
 import { isCleanString, isValidPriority } from "./taskValidator.js";
 
 export function addItem(arr, itm) {
@@ -46,4 +45,10 @@ export function updateStoreArr(newArray, store, storeMethod) {
   if (!newArray || !store || !storeMethod) return;
   if (typeof storeMethod !== "function") return;
   return storeMethod.call(store, newArray);
+}
+
+export function updateStats(store, storeMethod) {
+  if (!store || !storeMethod) return;
+  if (typeof storeMethod !== "function") return;
+  return storeMethod.call(store);
 }

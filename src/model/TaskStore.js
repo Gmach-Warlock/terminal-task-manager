@@ -4,7 +4,7 @@ import { taskTotals } from "./TaskTotals.js";
 export function myListener(store = taskStore) {
   if (taskTotals.total > 0) {
     console.log("Tasks have been updated. ");
-    logTasks(taskStore.tasks, "all");
+    logTasks(store.tasks, "all");
     mainMenu();
   }
 }
