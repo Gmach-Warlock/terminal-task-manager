@@ -33,7 +33,6 @@ export async function getTaskDescription(newTask = true) {
 }
 
 export async function getTaskPriority(newTask = true) {
-  console.log("getting priority");
   const lookup = {
     new: `Is this new task a low, medium, or high priority?`,
     edit: `Is the new priority low, medium, or high? `,

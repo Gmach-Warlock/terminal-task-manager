@@ -2,7 +2,7 @@ import { isCleanString, isValidPriority } from "./taskValidator.js";
 
 export function addItem(arr, itm) {
   if (!Array.isArray(arr) || !itm || !isValidPriority(itm.priority)) {
-    console.log("failed guard 1 in add item");
+    console.log("Item with that title not found. Returning to main menu");
     return arr || [];
   }
 
@@ -10,7 +10,6 @@ export function addItem(arr, itm) {
     (existing) => existing && existing.title === itm.title,
   );
   if (index !== -1) {
-    console.log("index aquired", index);
     const newArray = arr.map((existing) => {
       return existing.title === itm.title ? itm : existing;
     });
@@ -30,11 +29,18 @@ export function deleteItem(arr, itm) {
 }
 
 export function editItem(arr, title, prop, newValue) {
-  if (!arr || !title || !prop || !newValue) return;
-  if (!Array.isArray(arr) || !isCleanString(title) || !isCleanString(newValue))
+  if (!arr || !title || !prop || newValue === undefined || newValue === null) {
+    console.log("failing edit item 1st guard ", arr, title, prop, newValue);
     return;
+  }
+  if (!Array.isArray(arr) || !isCleanString(title) || !isCleanString(prop)) {
+    console.log("failing editItem 2nd guard, ", arr, title, prop, newValue);
+    return;
+  }
   const newArray = [...arr];
-  const itemToEdit = newArray.find((item) => item._title === title);
+  const itemToEdit = newArray.find(
+    (item) => item._title === title || item.title === title,
+  );
   if (!itemToEdit) {
     console.log("Item with that term in title does not exist");
     return;

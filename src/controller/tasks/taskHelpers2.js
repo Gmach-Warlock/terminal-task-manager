@@ -1,4 +1,9 @@
-import { isValidCategory, isValidStatus } from "./taskValidator.js";
+import {
+  isValidCategory,
+  isValidStatus,
+  isValidPriority,
+} from "./taskValidator.js";
+import { taskStore } from "../../model/taskStore.js";
 
 export function filterByCategory(arr, category, value) {
   if (!arr || !category || !value) return;
@@ -24,6 +29,5 @@ export function makeFilterArrayByPriority(priority) {
   const newArray = taskStore.tasks.filter(
     (item) => item.priority.toLowerCase() === priority,
   );
-  logTasks(newArray, "filter");
   return newArray;
 }

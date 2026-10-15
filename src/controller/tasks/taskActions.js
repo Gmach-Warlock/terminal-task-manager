@@ -2,7 +2,6 @@ import { taskStore } from "../../model/taskStore.js";
 import { Task } from "../../model/Task.js";
 import { filterTaskInStore } from "./taskFilters.js";
 import {
-  getMarkTitle,
   getTaskDescription,
   getTaskPriority,
   getTaskTitle,
@@ -15,6 +14,7 @@ import { taskApp } from "../../model/TaskApp.js";
 import { taskTotals } from "../../model/TaskTotals.js";
 import { sortItemsInStore } from "./taskSorters.js";
 import { cleanNumericInput } from "./taskValidator.js";
+
 export async function addTaskToStore() {
   const title = await getTaskTitle("add");
   const description = await getTaskDescription();
@@ -36,8 +36,8 @@ export async function removeTaskFromStore() {
   const title = await getTaskTitle("delete");
   const task = taskStore.tasks.find((task) => task.title === title);
   if (!task) {
-    console.log("Title not found");
-    return;
+    console.log("Title not found, returning to main menu");
+    mainMenu();
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
   taskStore.setTasks(newArray);
@@ -57,7 +57,9 @@ export async function editTaskInStore() {
 }
 
 async function markTaskInStore(completed = true) {
-  const title = await getMarkTitle();
+  const title = completed
+    ? await getTaskTitle("complete")
+    : await getTaskTitle("incomplete");
   const markedItem = completed
     ? await editItem(taskStore.tasks, title, "completed", true)
     : await editItem(taskStore.tasks, title, "completed", false);

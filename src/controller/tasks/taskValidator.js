@@ -10,7 +10,7 @@ export function isCleanString(str) {
     return false;
   }
   // Guard against numeric values in string fields
-  if (!isNaN(str)) {
+  if (/^\d+$/.test(str)) {
     console.log("Please enter a string, not a number ");
     return false;
   }
@@ -22,7 +22,7 @@ export function isCleanString(str) {
   return true;
 }
 export function isValidPriority(string) {
-  if (!isCleanString) return false;
+  if (!isCleanString(string)) return false;
   const lowerCased = string.toLowerCase();
   if (lowerCased !== "low" && lowerCased !== "medium" && lowerCased !== "high")
     return false;
