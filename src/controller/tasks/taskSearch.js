@@ -1,4 +1,4 @@
-import { taskStore } from "../../model/taskStore.js";
+/* import { taskStore } from "../../model/taskStore.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { getSearchCriteria } from "../terminal/searchPrompts.js";
 import { searchArray } from "./taskHelpers3.js";
@@ -10,3 +10,4 @@ export async function searchTasksInStore() {
   logTasks(newArray, "search");
   mainMenu();
 }
+ */

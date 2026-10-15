@@ -7,7 +7,6 @@ import {
   getTaskTitle,
 } from "../terminal/infoPrompts.js";
 import { getEditInfo } from "../terminal/editPrompts.js";
-import { searchTasksInStore } from "./taskSearch.js";
 import { addItem, editItem } from "./taskHelpers.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { taskApp } from "../../model/TaskApp.js";
@@ -40,7 +39,14 @@ export async function removeTaskFromStore() {
     mainMenu();
   }
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
-  taskStore.setTasks(newArray);
+  if (newArray) {
+    taskTotals.removeTaskTotals();
+    taskStore.setTasks(newArray);
+  }
+  if (!newArray) {
+    console.log("Failed to remove task: validation failed ");
+    return;
+  }
 }
 
 export async function editTaskInStore() {
@@ -80,6 +86,14 @@ function quitTaskApp() {
 Thank you for using the Task App. 
 Goodbye.`);
   taskApp.quitApp();
+}
+
+export async function searchTasksInStore() {
+  const term = await getSearchCriteria();
+  if (!term) return;
+  const newArray = searchArray(taskStore.tasks, term);
+  logTasks(newArray, "search");
+  mainMenu();
 }
 
 // returns appropriate action sequence based on input

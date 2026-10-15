@@ -35,10 +35,6 @@ export function deleteItem(arr, itm) {
 }
 
 export function editItem(arr, title, prop, newValue) {
-  if (!arr || !title || !prop || newValue === undefined || newValue === null) {
-    console.log("failing edit item 1st guard ", arr, title, prop, newValue);
-    return;
-  }
   if (!Array.isArray(arr) || !isCleanString(title) || !isCleanString(prop)) {
     console.log("failing editItem 2nd guard:", {
       isArray: Array.isArray(arr),
@@ -46,6 +42,10 @@ export function editItem(arr, title, prop, newValue) {
       isCleanProp: isCleanString(prop),
       propValue: prop,
     });
+    return;
+  }
+  if (!arr || !title || !prop || newValue === undefined || newValue === null) {
+    console.log("failing edit item 1st guard ", arr, title, prop, newValue);
     return;
   }
   const newArray = [...arr];

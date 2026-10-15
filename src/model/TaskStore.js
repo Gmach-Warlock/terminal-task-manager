@@ -1,10 +1,11 @@
-import { logTasks, mainMenu } from "../view/menu.js";
+import { logStats, logTasks, mainMenu } from "../view/menu.js";
 import { taskTotals } from "./TaskTotals.js";
 
 export function myListener(store = taskStore) {
   if (taskTotals.total > 0) {
     console.log("Tasks have been updated. ");
     logTasks(store.tasks, "all");
+    logStats(taskTotals);
     mainMenu();
   }
 }

@@ -24,7 +24,6 @@ What would you like to do?
 }
 
 export function logTasks(arr, type) {
-  console.log("in log tasks now", arr, type);
   const lookup = {
     all: "Here are all of the tasks: ",
     filter: "Here are the filtered results: ",
@@ -51,6 +50,15 @@ createdAt: ${item.createdAt},
     `),
   );
   console.log(`
+---------------------------------------------
+    `);
+}
+
+export function logStats(store) {
+  console.log(`
+Size: ${store.size},
+Total: ${store.total},
+
 ---------------------------------------------
     `);
 }
