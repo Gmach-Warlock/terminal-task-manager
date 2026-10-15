@@ -1,4 +1,8 @@
 export function isCleanString(str) {
+  if (typeof str !== "string") {
+    console.log("Please use strings, not booleans or other data types.");
+    return false;
+  }
   const htmlRegex = /<[^>]*>/;
   // This regex.test returns true if there is an html tag in the string
   if (htmlRegex.test(str)) {
@@ -12,10 +16,6 @@ export function isCleanString(str) {
   // Guard against numeric values in string fields
   if (/^\d+$/.test(str)) {
     console.log("Please enter a string, not a number ");
-    return false;
-  }
-  if (typeof str !== "string") {
-    console.log("Please use strings, not booleans or other data types.");
     return false;
   }
 

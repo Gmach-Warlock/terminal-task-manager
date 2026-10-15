@@ -2,7 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert";
 import { addItem } from "../../src/controller/tasks/taskHelpers.js";
 
-/* describe("addItem", () => {
+describe("addItem", () => {
   it("should early return with undefined if an array or item is not provided", () => {
     const array = [
       { title: "Title 1", description: "Description 1", priority: "low" },
@@ -14,7 +14,6 @@ import { addItem } from "../../src/controller/tasks/taskHelpers.js";
       priority: "high",
     };
     assert.strictEqual(addItem(array), array);
-    assert.strictEqual(addItem(newItem), array);
   });
   it("should add the item to the array if it doesn't exist or replace the item in the array that has the same title with the new item", () => {
     const array = [
@@ -41,4 +40,4 @@ import { addItem } from "../../src/controller/tasks/taskHelpers.js";
       { title: "Title 2", description: "Description 2", priority: "medium" },
     ]);
   });
-}); */
+});
