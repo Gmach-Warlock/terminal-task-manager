@@ -2,10 +2,11 @@
 
 ## This is a task manager which is used in the terminal. It is intended for use with Node. Here are the steps to download and initialize it.
 
-1. Clone the repo using git clone <web address here>
-2. cd into the project folder.
-3. run npm run start, or node app.js to run the program.
-4. run npm run test in the main folder to see the tests after you have installed the basic dependencies if you want to see their results
+1. Click on the green Code button and copy the link (there is an icon of a double square which copies the url to clipboard)
+2. Clone the repo using git clone url
+3. cd into the project folder.
+4. run npm run start, or node app.js to run the program.
+5. run npm run test in the main folder to see the tests after you have installed the basic dependencies if you want to see their results
 
 ## A menu should appear and prompt for a numeric response between 1 and 10.
 
