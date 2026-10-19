@@ -10,7 +10,7 @@ import {
 } from "../terminal/infoPrompts.js";
 import { getEditInfo } from "../terminal/editPrompts.js";
 import { addItem, editItem, updateStoreArr } from "./taskHelpers.js";
-import { sortItems } from "./taskHelpers3.js";
+import { sortItems, searchArray } from "./taskHelpers3.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { cleanNumericInput } from "./taskValidator.js";
 import { getSortCriteria } from "../terminal/sortPrompts.js";

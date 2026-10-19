@@ -9,7 +9,7 @@ describe("editItem", () => {
   it("should early return undefined if any of the parameters are missing", () => {
     assert.strictEqual(editItem(arr, "title 1", "priority"), undefined);
   });
-  /* it("should early return undefined if any of the paramters are the wrong type", () => {
+  it("should early return undefined if any of the paramters are the wrong type", () => {
     assert.strictEqual(
       editItem({ title: "Bad Array" }, "Title", "priority", "dog"),
       undefined,
@@ -19,9 +19,12 @@ describe("editItem", () => {
       editItem(arr, "Title <hack> 1", "priority", "dog"),
       undefined,
     );
-    assert.strictEqual(editItem(arr, "Title 1", "wrong", "low"), undefined);
-    assert.strictEqual(editItem(arr, "Title 1", "priority", "bad"), undefined);
-  }); */
+    assert.strictEqual(editItem(arr, "Title 1", 1, "low"), undefined);
+    assert.strictEqual(
+      editItem("string", "Title 1", "priority", "bad"),
+      undefined,
+    );
+  });
   it("should return early if there is no item with the title provided in the array provided", () => {
     assert.strictEqual(editItem(arr, "Wrong", "priority", "low"), undefined);
   });
