@@ -21,6 +21,17 @@ export function isCleanString(str) {
 
   return true;
 }
+export function itemExistsInArray(arr, itm) {
+  if (!arr || !itm) return false;
+  if (!isValidArray(arr) || !typeof itm !== "object") return false;
+  if (!arr.find((i) => i.title === itm.title)) return false;
+}
+export function isValidItemForArray(arr, itm, prop) {
+  if (typeof prop !== "string") return false;
+  if (!Object.hasOwn(itm, prop)) return false;
+  if (!itemExistsInArray(arr, itm)) return false;
+  return true;
+}
 export function isValidPriority(string) {
   if (!isCleanString(string)) return false;
   const lowerCased = string.toLowerCase();
@@ -41,6 +52,10 @@ export function isValidNumber(number) {
   return true;
 }
 
+export function isValidArray(arr) {
+  if (!Array.isArray(arr)) return false;
+  return true;
+}
 export function isValidCategory(category) {
   if (!category) return false;
   if (category !== "completed" && category !== "priority") return false;
