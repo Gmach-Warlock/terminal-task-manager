@@ -13,20 +13,19 @@ export function isCleanString(str) {
     console.log("Please enter something in the field");
     return false;
   }
-  // Guard against numeric values in string fields
-  if (/^\d+$/.test(str)) {
-    console.log("Please enter a string, not a number ");
-    return false;
-  }
 
   return true;
 }
 export function itemExistsInArray(arr, itm) {
-  if (!arr || !itm) return false;
-  if (!isValidArray(arr) || !typeof itm !== "object") return false;
+  if (arr === undefined || arr === null || itm === undefined || itm === null)
+    return false;
+  if (!isValidArray(arr) || typeof itm !== "object") return false;
   if (!arr.find((i) => i.title === itm.title)) return false;
+  return true;
 }
 export function isValidItemForArray(arr, itm, prop) {
+  if (!isValidArray(arr)) return false;
+  if (typeof itm !== "object" || itm === null) return false;
   if (typeof prop !== "string") return false;
   if (!Object.hasOwn(itm, prop)) return false;
   if (!itemExistsInArray(arr, itm)) return false;
@@ -50,6 +49,14 @@ export function isValidNumber(number) {
     return false;
   }
   return true;
+}
+
+export function isNumberString(string) {
+  if (/^\d+$/.test(string)) {
+    console.log("Please enter a string, not a number ");
+    return true;
+  }
+  return false;
 }
 
 export function isValidArray(arr) {

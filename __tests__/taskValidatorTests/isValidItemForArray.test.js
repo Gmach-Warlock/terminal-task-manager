@@ -7,6 +7,7 @@ describe("isValidItemForArray", () => {
   const goodTestArray = [];
   const testItem = { title: "Test Item" };
   const fullTestArray = [testItem];
+  const unMatchedArray = [{ title: "Wrong Title" }];
   it("should return false if the params are not of the proper types", () => {
     assert.strictEqual(
       isValidItemForArray(badTestArray, testItem, "title"),
@@ -29,7 +30,7 @@ describe("isValidItemForArray", () => {
   });
   it("should return false if there is not an item with the same title as the one of the object provided", () => {
     assert.strictEqual(
-      isValidItemForArray(badTestArray, testItem, "title"),
+      isValidItemForArray(unMatchedArray, testItem, "title"),
       false,
     );
   });
