@@ -2,6 +2,7 @@ import {
   isCleanString,
   isValidPriority,
   isValidCategory,
+  isValidObject,
 } from "./taskValidator.js";
 
 export function addItem(arr, itm) {
@@ -74,7 +75,18 @@ export function updateStoreArr(newArray, store, storeMethod) {
 }
 
 export function updateStats(store, storeMethod) {
-  if (!store || !storeMethod) return;
+  if (!isValidObject(store) || !storeMethod) return;
   if (typeof storeMethod !== "function") return;
   return storeMethod.call(store);
+}
+
+export function toggleStats(store, addMethod, subtractMethod) {
+  if (
+    !isValidObject(store) ||
+    typeof addMethod !== "function" ||
+    typeof subtractMethod !== "function"
+  )
+    return;
+  addMethod.call(store);
+  subtractMethod.call(store);
 }

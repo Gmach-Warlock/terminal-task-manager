@@ -18,7 +18,6 @@ export function makeFilterArrayByStatus(status, arr) {
 }
 
 export function makeFilterArrayByPriority(priority, arr) {
-  console.log("in function", priority);
   if (!isValidPriority(priority)) {
     console.log("failed make array guard");
     return;
@@ -49,7 +48,6 @@ export function makeFilterArray(arr, cat, val) {
     },
   };
   const newArray = lookup[cat][val]();
-  console.log(newArray);
   return newArray;
 }
 

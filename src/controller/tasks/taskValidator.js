@@ -133,3 +133,8 @@ export function isValidCategoryValue(val) {
     return false;
   return true;
 }
+
+export function isValidObject(obj) {
+  if (!obj || typeof obj !== "object" || Array.isArray(obj)) return false;
+  return true;
+}
