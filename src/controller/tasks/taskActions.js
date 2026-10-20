@@ -11,6 +11,7 @@ import { getEditInfo } from "../terminal/editPrompts.js";
 import {
   addItem,
   editItem,
+  toggleStats,
   updateStats,
   updateStoreArr,
 } from "./taskHelpers.js";
@@ -20,6 +21,7 @@ import { cleanNumericInput, isValidObject } from "./taskValidator.js";
 import { getSortCriteria } from "../terminal/sortPrompts.js";
 import { filterTaskInStore } from "./taskFilters.js";
 import { taskCompletes } from "../../model/TaskCompletes.js";
+import { isOkToToggleInStore } from "./taskValidation.js";
 
 export async function addTaskToStore() {
   const lookup = await getAddInfo();
@@ -76,6 +78,7 @@ export async function editTaskInStore() {
     lookup.prop,
     lookup.newValue,
   );
+  // here we need to implement our final logic
   const newState = addItem(taskStore.tasks, edittedItem);
   if (newState) updateStoreArr(newState, taskStore, taskStore.setTasks);
   if (!newState) mainMenu();
@@ -88,6 +91,20 @@ async function markTaskInStore(completed = true) {
   const markedItem = completed
     ? await editItem(taskStore.tasks, title, "completed", true)
     : await editItem(taskStore.tasks, title, "completed", false);
+  // here we need to implement our final logic
+  if (isOkToToggleInStore(markedItem, completed)) {
+    completed
+      ? toggleStats(
+          taskCompletes,
+          taskCompletes.addTaskComplete,
+          taskCompletes.subtractTaskIncomplete,
+        )
+      : toggleStats(
+          taskCompletes,
+          taskCompletes.addTaskIncomplete,
+          taskCompletes.subtractTaskComplete,
+        );
+  }
   const newState = addItem(taskStore.tasks, markedItem);
   if (newState) updateStoreArr(newState, taskStore, taskStore.setTasks);
   if (!newState) mainMenu();

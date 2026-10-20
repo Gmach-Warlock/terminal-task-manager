@@ -1,13 +1,13 @@
 import { isValidObject } from "./taskValidator.js";
 
-export function isOkToToggleInStore(store, task, completed) {
-  if (
-    !isValidObject(store) ||
-    !isValidObject(task) ||
-    typeof completed !== "boolean"
-  )
+export function isOkToToggleInStore(task, completed) {
+  if (!isValidObject(task) || typeof completed !== "boolean") {
+    console.log("fail in 1");
     return false;
-  console.log("checking ", task.completed, completed);
-  if (task.completed === completed) return false;
+  }
+  if (task.completed !== completed) {
+    console.log("failed in 2");
+    return false;
+  }
   return true;
 }
