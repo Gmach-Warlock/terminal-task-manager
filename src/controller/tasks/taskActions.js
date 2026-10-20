@@ -16,7 +16,7 @@ import {
 } from "./taskHelpers.js";
 import { sortItems, searchArray } from "./taskHelpers2.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
-import { cleanNumericInput } from "./taskValidator.js";
+import { cleanNumericInput, isValidObject } from "./taskValidator.js";
 import { getSortCriteria } from "../terminal/sortPrompts.js";
 import { filterTaskInStore } from "./taskFilters.js";
 import { taskCompletes } from "../../model/TaskCompletes.js";
