@@ -59,6 +59,7 @@ createdAt: ${item.createdAt},
 
 export function logStats() {
   console.log(`
+Size: ${taskTotals.size},
 Total: ${taskTotals.total},
 Completed tasks: ${taskCompletes.completeTasks},
 Incomplete tasks: ${taskCompletes.incompleteTasks},

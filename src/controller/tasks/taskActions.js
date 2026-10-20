@@ -8,12 +8,18 @@ import {
   getAddInfo,
 } from "../terminal/infoPrompts.js";
 import { getEditInfo } from "../terminal/editPrompts.js";
-import { addItem, editItem, updateStoreArr } from "./taskHelpers.js";
+import {
+  addItem,
+  editItem,
+  updateStats,
+  updateStoreArr,
+} from "./taskHelpers.js";
 import { sortItems, searchArray } from "./taskHelpers2.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { cleanNumericInput } from "./taskValidator.js";
 import { getSortCriteria } from "../terminal/sortPrompts.js";
 import { filterTaskInStore } from "./taskFilters.js";
+import { taskCompletes } from "../../model/TaskCompletes.js";
 
 export async function addTaskToStore() {
   const lookup = await getAddInfo();
@@ -22,6 +28,7 @@ export async function addTaskToStore() {
   if (newState) {
     console.clear();
     taskTotals.addTaskTotals();
+    updateStats(taskCompletes, taskCompletes.addTaskIncomplete());
     updateStoreArr(newState, taskStore, taskStore.setTasks);
   }
   if (!newState) {
@@ -37,9 +44,22 @@ export async function removeTaskFromStore() {
     console.log("Title not found, returning to main menu");
     mainMenu();
   }
+  const key = task.completed ? "complete" : "incomplete";
+  console.log("key", key);
+  if (!key) {
+    console.log("Problem with key. Returning to main menu");
+    mainMenu();
+  }
+  const lookup = {
+    complete: () =>
+      updateStats(taskCompletes, taskCompletes.subtractTaskComplete),
+    incomplete: () =>
+      updateStats(taskCompletes, taskCompletes.subtractTaskIncomplete),
+  };
   const newArray = taskStore.tasks.filter((task) => task.title !== title);
   if (newArray && task) {
     taskTotals.removeTaskTotals();
+    lookup[key]();
     updateStoreArr(newArray, taskStore, taskStore.setTasks);
   }
   if (!newArray) {
