@@ -80,7 +80,10 @@ export async function getMarkTitle(complete = true) {
 }
 
 export async function getSearchCriteria() {
-  const searchTerm = await getStringInput(`What is the term to search for? `);
+  const searchTerm = await getStringInput(
+    `What is the term to search for? `,
+    false,
+  );
   const cleanedTerm = searchTerm.toLowerCase();
   return cleanedTerm;
 }

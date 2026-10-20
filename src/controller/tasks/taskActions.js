@@ -3,24 +3,21 @@ import { Task } from "../../model/Task.js";
 import { taskTotals } from "../../model/TaskTotals.js";
 import { taskApp } from "../../model/TaskApp.js";
 import {
-  getTaskDescription,
-  getTaskPriority,
   getTaskTitle,
   getSearchCriteria,
+  getAddInfo,
 } from "../terminal/infoPrompts.js";
 import { getEditInfo } from "../terminal/editPrompts.js";
 import { addItem, editItem, updateStoreArr } from "./taskHelpers.js";
-import { sortItems, searchArray } from "./taskHelpers3.js";
+import { sortItems, searchArray } from "./taskHelpers2.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { cleanNumericInput } from "./taskValidator.js";
 import { getSortCriteria } from "../terminal/sortPrompts.js";
 import { filterTaskInStore } from "./taskFilters.js";
 
 export async function addTaskToStore() {
-  const title = await getTaskTitle("add");
-  const description = await getTaskDescription();
-  const priority = await getTaskPriority();
-  const task = new Task(title, description, priority);
+  const lookup = await getAddInfo();
+  const task = new Task(lookup.title, lookup.description, lookup.priority);
   const newState = addItem(taskStore.tasks, task);
   if (newState) {
     console.clear();

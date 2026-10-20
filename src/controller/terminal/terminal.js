@@ -41,15 +41,15 @@ export async function getNumericInput(message, numOfOptions) {
   return answer;
 }
 
-export async function getStringInput(message) {
+export async function getStringInput(message, numGuard = true) {
   let hasAnswer = false;
   let answer;
   while (!hasAnswer) {
     answer = await getAnswer(message);
-    if (!isCleanString(answer)) {
+    if (!isCleanString(answer, numGuard)) {
       continue;
     }
-    if (isCleanString(answer)) hasAnswer = true;
+    if (isCleanString(answer, numGuard)) hasAnswer = true;
   }
   return answer;
 }

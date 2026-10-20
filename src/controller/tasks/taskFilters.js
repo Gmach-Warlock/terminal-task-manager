@@ -1,18 +1,15 @@
 import { taskStore } from "../../model/taskStore.js";
 import { logTasks, mainMenu } from "../../view/menu.js";
 import { getFilterInfo } from "../terminal/filterPrompts.js";
-import {
-  makeFilterArrayByStatus,
-  makeFilterArrayByPriority,
-} from "./taskHelpers2.js";
+import { makeFilterArray } from "./taskHelpers2.js";
 
 function taskFilterByStatus(status) {
-  const newArray = makeFilterArrayByStatus(status);
+  const newArray = makeFilterArray(taskStore.tasks, "completed", status);
   logTasks(newArray, "filter");
 }
 
 function taskFilterByPriority(priority) {
-  const newArray = makeFilterArrayByPriority(priority);
+  const newArray = makeFilterArray(taskStore.tasks, "priority", priority);
   logTasks(newArray, "filter");
 }
 

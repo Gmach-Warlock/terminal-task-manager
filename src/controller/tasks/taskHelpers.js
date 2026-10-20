@@ -36,12 +36,12 @@ export function deleteItem(arr, itm) {
 
 export function editItem(arr, title, prop, newValue) {
   if (!Array.isArray(arr) || !isCleanString(title) || !isCleanString(prop)) {
-    console.log("failing editItem 2nd guard:", {
+    /* degug log console.log("failing editItem 2nd guard:", {
       isArray: Array.isArray(arr),
       isCleanTitle: isCleanString(title),
       isCleanProp: isCleanString(prop),
       propValue: prop,
-    });
+    });*/
     return;
   }
   if (!arr || !title || !prop || newValue === undefined || newValue === null) {

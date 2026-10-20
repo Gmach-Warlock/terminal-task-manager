@@ -1,4 +1,19 @@
-export function isCleanString(str) {
+// makes sure number is in range, then converts to string for lookup
+export function cleanNumericInput(number, min = 1, max = 10) {
+  if (!isValidNumber(number)) {
+    return;
+  }
+  if (number > max || number < min) {
+    console.log(
+      `Please enter the appropriate value. The value given was out of range. `,
+    );
+    return;
+  }
+  let stringVal = String(number);
+  return stringVal;
+}
+
+export function isCleanString(str, numGuard = true) {
   if (typeof str !== "string") {
     console.log("Please use strings, not booleans or other data types.");
     return false;
@@ -13,6 +28,11 @@ export function isCleanString(str) {
     console.log("Please enter something in the field");
     return false;
   }
+  if (numGuard)
+    if (isNumberString(str)) {
+      console.log("Please enter a string not a number. ");
+      return false;
+    }
 
   return true;
 }
@@ -23,6 +43,8 @@ export function itemExistsInArray(arr, itm) {
   if (!arr.find((i) => i.title === itm.title)) return false;
   return true;
 }
+
+// isValid functions
 export function isValidItemForArray(arr, itm, prop) {
   if (!isValidArray(arr)) return false;
   if (typeof itm !== "object" || itm === null) return false;
@@ -53,7 +75,6 @@ export function isValidNumber(number) {
 
 export function isNumberString(string) {
   if (/^\d+$/.test(string)) {
-    console.log("Please enter a string, not a number ");
     return true;
   }
   return false;
@@ -88,21 +109,6 @@ export function isValidSortType(type) {
   return true;
 }
 
-// makes sure number is in range, then converts to string for lookup
-export function cleanNumericInput(number, min = 1, max = 10) {
-  if (!isValidNumber(number)) {
-    return;
-  }
-  if (number > max || number < min) {
-    console.log(
-      `Please enter the appropriate value. The value given was out of range. `,
-    );
-    return;
-  }
-  let stringVal = String(number);
-  return stringVal;
-}
-
 export function isValidInfo(infoObj) {
   if (!infoObj.description || !infoObj.title || !infoObj.priority) return false;
   if (
@@ -112,5 +118,18 @@ export function isValidInfo(infoObj) {
   )
     return false;
 
+  return true;
+}
+
+export function isValidCategoryValue(val) {
+  if (
+    val !== "complete" &&
+    val !== "incomplete" &&
+    val !== "all" &&
+    val !== "low" &&
+    val !== "medium" &&
+    val !== "high"
+  )
+    return false;
   return true;
 }
